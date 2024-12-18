@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import HamburgerMenu from './HamburgerMenu';
 
 const Nav = styled.nav`
@@ -61,7 +61,6 @@ const NavLink = styled(Link)`
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
