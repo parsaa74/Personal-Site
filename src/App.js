@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { Routes, Route } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import CustomCursor from './components/CustomCursor';
 import InteractiveNav from './components/InteractiveNav';
 import LoadingScreen from './components/LoadingScreen';
@@ -19,12 +19,28 @@ const AppContainer = styled(motion.div)`
   cursor: none;
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled(motion.div)`
   position: relative;
   z-index: 1;
 `;
 
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    y: 20
+  },
+  enter: {
+    opacity: 1,
+    y: 0
+  },
+  exit: {
+    opacity: 0,
+    y: -20
+  }
+};
+
 function App() {
+  const location = useLocation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -49,16 +65,25 @@ function App() {
     <AppContainer>
       <CustomCursor mousePosition={mousePosition} />
       <InteractiveNav />
-      <ContentWrapper>
-        <Suspense fallback={<LoadingScreen />}>
-          <Routes>
-            <Route path="/" element={<Home mousePosition={mousePosition} />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </Suspense>
-      </ContentWrapper>
+      <AnimatePresence mode="wait">
+        <ContentWrapper
+          key={location.pathname}
+          initial="initial"
+          animate="enter"
+          exit="exit"
+          variants={pageVariants}
+          transition={{ duration: 0.5 }}
+        >
+          <Suspense fallback={<LoadingScreen />}>
+            <Routes location={location}>
+              <Route path="/" element={<Home mousePosition={mousePosition} />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </Suspense>
+        </ContentWrapper>
+      </AnimatePresence>
     </AppContainer>
   );
 }
