@@ -6,33 +6,40 @@ const LoadingContainer = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: black;
+  width: 100%;
+  height: 100vh;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 `;
 
-const LoadingText = styled(motion.h1)`
-  font-size: 2rem;
-  color: white;
+const LoadingText = styled(motion.h2)`
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: #fff;
+  font-family: 'Space Mono', monospace;
 `;
 
 const LoadingScreen = () => {
   return (
     <LoadingContainer
-      initial={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
     >
       <LoadingText
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        animate={{
+          opacity: [1, 0.5, 1],
+          scale: [1, 1.02, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "linear",
+        }}
       >
-        Loading...
+        LOADING
       </LoadingText>
     </LoadingContainer>
   );
