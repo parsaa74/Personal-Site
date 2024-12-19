@@ -7,7 +7,7 @@ import { Sphere } from '../math/Sphere.js';
 import { Object3D } from './Object3D.js';
 import { Matrix4 } from '../math/Matrix4.js';
 import { Matrix3 } from '../math/Matrix3.js';
-import { generateUUID } from '../math/MathUtils.js';
+import * as MathUtils from '../math/MathUtils.js';
 import { arrayNeedsUint32 } from '../utils.js';
 
 let _id = 0;
@@ -29,13 +29,12 @@ class BufferGeometry extends EventDispatcher {
 
 		Object.defineProperty( this, 'id', { value: _id ++ } );
 
-		this.uuid = generateUUID();
+		this.uuid = MathUtils.generateUUID();
 
 		this.name = '';
 		this.type = 'BufferGeometry';
 
 		this.index = null;
-		this.indirect = null;
 		this.attributes = {};
 
 		this.morphAttributes = {};
@@ -71,20 +70,6 @@ class BufferGeometry extends EventDispatcher {
 		}
 
 		return this;
-
-	}
-
-	setIndirect( indirect ) {
-
-		this.indirect = indirect;
-
-		return this;
-
-	}
-
-	getIndirect() {
-
-		return this.indirect;
 
 	}
 
@@ -287,41 +272,16 @@ class BufferGeometry extends EventDispatcher {
 
 	setFromPoints( points ) {
 
-		const positionAttribute = this.getAttribute( 'position' );
+		const position = [];
 
-		if ( positionAttribute === undefined ) {
+		for ( let i = 0, l = points.length; i < l; i ++ ) {
 
-			const position = [];
-
-			for ( let i = 0, l = points.length; i < l; i ++ ) {
-
-				const point = points[ i ];
-				position.push( point.x, point.y, point.z || 0 );
-
-			}
-
-			this.setAttribute( 'position', new Float32BufferAttribute( position, 3 ) );
-
-		} else {
-
-			const l = Math.min( points.length, positionAttribute.count ); // make sure data do not exceed buffer size
-
-			for ( let i = 0; i < l; i ++ ) {
-
-				const point = points[ i ];
-				positionAttribute.setXYZ( i, point.x, point.y, point.z || 0 );
-
-			}
-
-			if ( points.length > positionAttribute.count ) {
-
-				console.warn( 'THREE.BufferGeometry: Buffer size too small for points data. Use .dispose() and create a new geometry.' );
-
-			}
-
-			positionAttribute.needsUpdate = true;
+			const point = points[ i ];
+			position.push( point.x, point.y, point.z || 0 );
 
 		}
+
+		this.setAttribute( 'position', new Float32BufferAttribute( position, 3 ) );
 
 		return this;
 
@@ -340,7 +300,7 @@ class BufferGeometry extends EventDispatcher {
 
 		if ( position && position.isGLBufferAttribute ) {
 
-			console.error( 'THREE.BufferGeometry.computeBoundingBox(): GLBufferAttribute requires a manual bounding box.', this );
+			console.error( 'THREE.BufferGeometry.computeBoundingBox(): GLBufferAttribute requires a manual bounding box. Alternatively set "mesh.frustumCulled" to "false".', this );
 
 			this.boundingBox.set(
 				new Vector3( - Infinity, - Infinity, - Infinity ),
@@ -410,7 +370,7 @@ class BufferGeometry extends EventDispatcher {
 
 		if ( position && position.isGLBufferAttribute ) {
 
-			console.error( 'THREE.BufferGeometry.computeBoundingSphere(): GLBufferAttribute requires a manual bounding sphere.', this );
+			console.error( 'THREE.BufferGeometry.computeBoundingSphere(): GLBufferAttribute requires a manual bounding sphere. Alternatively set "mesh.frustumCulled" to "false".', this );
 
 			this.boundingSphere.set( new Vector3(), Infinity );
 
@@ -527,21 +487,24 @@ class BufferGeometry extends EventDispatcher {
 
 		}
 
-		const positionAttribute = attributes.position;
-		const normalAttribute = attributes.normal;
-		const uvAttribute = attributes.uv;
+		const indices = index.array;
+		const positions = attributes.position.array;
+		const normals = attributes.normal.array;
+		const uvs = attributes.uv.array;
+
+		const nVertices = positions.length / 3;
 
 		if ( this.hasAttribute( 'tangent' ) === false ) {
 
-			this.setAttribute( 'tangent', new BufferAttribute( new Float32Array( 4 * positionAttribute.count ), 4 ) );
+			this.setAttribute( 'tangent', new BufferAttribute( new Float32Array( 4 * nVertices ), 4 ) );
 
 		}
 
-		const tangentAttribute = this.getAttribute( 'tangent' );
+		const tangents = this.getAttribute( 'tangent' ).array;
 
 		const tan1 = [], tan2 = [];
 
-		for ( let i = 0; i < positionAttribute.count; i ++ ) {
+		for ( let i = 0; i < nVertices; i ++ ) {
 
 			tan1[ i ] = new Vector3();
 			tan2[ i ] = new Vector3();
@@ -561,13 +524,13 @@ class BufferGeometry extends EventDispatcher {
 
 		function handleTriangle( a, b, c ) {
 
-			vA.fromBufferAttribute( positionAttribute, a );
-			vB.fromBufferAttribute( positionAttribute, b );
-			vC.fromBufferAttribute( positionAttribute, c );
+			vA.fromArray( positions, a * 3 );
+			vB.fromArray( positions, b * 3 );
+			vC.fromArray( positions, c * 3 );
 
-			uvA.fromBufferAttribute( uvAttribute, a );
-			uvB.fromBufferAttribute( uvAttribute, b );
-			uvC.fromBufferAttribute( uvAttribute, c );
+			uvA.fromArray( uvs, a * 2 );
+			uvB.fromArray( uvs, b * 2 );
+			uvC.fromArray( uvs, c * 2 );
 
 			vB.sub( vA );
 			vC.sub( vA );
@@ -600,7 +563,7 @@ class BufferGeometry extends EventDispatcher {
 
 			groups = [ {
 				start: 0,
-				count: index.count
+				count: indices.length
 			} ];
 
 		}
@@ -615,9 +578,9 @@ class BufferGeometry extends EventDispatcher {
 			for ( let j = start, jl = start + count; j < jl; j += 3 ) {
 
 				handleTriangle(
-					index.getX( j + 0 ),
-					index.getX( j + 1 ),
-					index.getX( j + 2 )
+					indices[ j + 0 ],
+					indices[ j + 1 ],
+					indices[ j + 2 ]
 				);
 
 			}
@@ -629,7 +592,7 @@ class BufferGeometry extends EventDispatcher {
 
 		function handleVertex( v ) {
 
-			n.fromBufferAttribute( normalAttribute, v );
+			n.fromArray( normals, v * 3 );
 			n2.copy( n );
 
 			const t = tan1[ v ];
@@ -645,7 +608,10 @@ class BufferGeometry extends EventDispatcher {
 			const test = tmp2.dot( tan2[ v ] );
 			const w = ( test < 0.0 ) ? - 1.0 : 1.0;
 
-			tangentAttribute.setXYZW( v, tmp.x, tmp.y, tmp.z, w );
+			tangents[ v * 4 ] = tmp.x;
+			tangents[ v * 4 + 1 ] = tmp.y;
+			tangents[ v * 4 + 2 ] = tmp.z;
+			tangents[ v * 4 + 3 ] = w;
 
 		}
 
@@ -658,9 +624,9 @@ class BufferGeometry extends EventDispatcher {
 
 			for ( let j = start, jl = start + count; j < jl; j += 3 ) {
 
-				handleVertex( index.getX( j + 0 ) );
-				handleVertex( index.getX( j + 1 ) );
-				handleVertex( index.getX( j + 2 ) );
+				handleVertex( indices[ j + 0 ] );
+				handleVertex( indices[ j + 1 ] );
+				handleVertex( indices[ j + 2 ] );
 
 			}
 

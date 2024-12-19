@@ -1,7 +1,7 @@
 import { Vector2 } from '../math/Vector2.js';
 import { MeshStandardMaterial } from './MeshStandardMaterial.js';
 import { Color } from '../math/Color.js';
-import { clamp } from '../math/MathUtils.js';
+import * as MathUtils from '../math/MathUtils.js';
 
 class MeshPhysicalMaterial extends MeshStandardMaterial {
 
@@ -34,7 +34,7 @@ class MeshPhysicalMaterial extends MeshStandardMaterial {
 		Object.defineProperty( this, 'reflectivity', {
 			get: function () {
 
-				return ( clamp( 2.5 * ( this.ior - 1 ) / ( this.ior + 1 ), 0, 1 ) );
+				return ( MathUtils.clamp( 2.5 * ( this.ior - 1 ) / ( this.ior + 1 ), 0, 1 ) );
 
 			},
 			set: function ( reflectivity ) {
@@ -68,7 +68,6 @@ class MeshPhysicalMaterial extends MeshStandardMaterial {
 
 		this._anisotropy = 0;
 		this._clearcoat = 0;
-		this._dispersion = 0;
 		this._iridescence = 0;
 		this._sheen = 0.0;
 		this._transmission = 0;
@@ -131,24 +130,6 @@ class MeshPhysicalMaterial extends MeshStandardMaterial {
 
 	}
 
-	get dispersion() {
-
-		return this._dispersion;
-
-	}
-
-	set dispersion( value ) {
-
-		if ( this._dispersion > 0 !== value > 0 ) {
-
-			this.version ++;
-
-		}
-
-		this._dispersion = value;
-
-	}
-
 	get sheen() {
 
 		return this._sheen;
@@ -207,7 +188,6 @@ class MeshPhysicalMaterial extends MeshStandardMaterial {
 		this.clearcoatNormalMap = source.clearcoatNormalMap;
 		this.clearcoatNormalScale.copy( source.clearcoatNormalScale );
 
-		this.dispersion = source.dispersion;
 		this.ior = source.ior;
 
 		this.iridescence = source.iridescence;
