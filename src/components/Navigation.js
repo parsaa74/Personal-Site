@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
@@ -54,7 +54,12 @@ const Navigation = () => {
       transition={{ duration: 0.8 }}
     >
       <NavLinks>
-        <NavLink to="/">Home</NavLink>
+        <NavLink 
+          to="/" 
+          className={location.pathname === '/' ? 'active' : ''}
+        >
+          Home
+        </NavLink>
         <NavLink to="/projects">Projects</NavLink>
         <NavLink to="/about">About</NavLink>
         <NavLink to="/contact">Contact</NavLink>
