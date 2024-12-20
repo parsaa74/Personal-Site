@@ -144,7 +144,9 @@ const InteractiveNav = () => {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('click', onClick);
       window.removeEventListener('resize', handleResize);
-      mountRef.current?.removeChild(renderer.domElement);
+      if (mountRef.current) {
+        mountRef.current.removeChild(renderer.domElement);
+      }
       scene.dispose();
       renderer.dispose();
     };
