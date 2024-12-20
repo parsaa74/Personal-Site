@@ -21,6 +21,12 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'no-unused-vars': 'warn',
     'react/prop-types': 'off',
+    'react/no-unescaped-entities': [
+      'error',
+      {
+        forbid: ['>', '}'],
+      },
+    ],
   },
   settings: {
     react: {
