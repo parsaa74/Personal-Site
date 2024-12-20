@@ -4,6 +4,11 @@
   "devCommand": "npm run start",
   "installCommand": "npm install",
   "framework": "create-react-app",
+  "env": {
+    "DISABLE_ESLINT_PLUGIN": "true",
+    "BABEL_ENV": "production",
+    "NODE_ENV": "production"
+  },
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
