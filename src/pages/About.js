@@ -232,107 +232,113 @@ const About = () => {
   ];
 
   return (
-    <AboutContainer>
-      <ContentGrid>
-        <Section>
-          <Title
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <TitleDecoration
-              animate={{ scaleX: [0, 1] }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            />
-            About Me
-          </Title>
-          
-          <Bio
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            I'm a{' '}
-            {bioHighlights.map((highlight, index) => (
-              <React.Fragment key={index}>
-                <BioHighlight
-                  onMouseEnter={() => setHoveredHighlight(highlight)}
-                  onMouseLeave={() => setHoveredHighlight(null)}
-                >
-                  {highlight.text}
-                </BioHighlight>
-                {index < bioHighlights.length - 1 ? ' ' : ''}
-              </React.Fragment>
-            ))}
-          </Bio>
-
-          {Object.entries(skills).map(([category, skillList], index) => (
-            <SkillCategory
-              key={category}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <AboutContainer>
+        <ContentGrid>
+          <Section>
+            <Title
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+              transition={{ duration: 0.6 }}
             >
-              <CategoryHeader>
-                <h3 style={{ textTransform: 'uppercase' }}>{category}</h3>
-                <ExpandButton
-                  onClick={() => setExpandedCategory(expandedCategory === category ? null : category)}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  {expandedCategory === category ? '-' : '+'}
-                </ExpandButton>
-              </CategoryHeader>
-
-              <AnimatePresence>
-                {(expandedCategory === category || expandedCategory === null) && (
-                  <SkillGrid
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+              <TitleDecoration
+                animate={{ scaleX: [0, 1] }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
+              About Me
+            </Title>
+            
+            <Bio
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              I&apos;m a{' '}
+              {bioHighlights.map((highlight, index) => (
+                <React.Fragment key={index}>
+                  <BioHighlight
+                    onMouseEnter={() => setHoveredHighlight(highlight)}
+                    onMouseLeave={() => setHoveredHighlight(null)}
                   >
-                    {skillList.map((skill) => (
-                      <SkillItem
-                        key={skill.name}
-                        whileHover={{ scale: 1.05, y: -5 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setSelectedSkill(skill)}
-                      >
-                        <h4>{skill.name}</h4>
-                        <ProgressBar>
-                          <ProgressFill
-                            initial={{ scaleX: 0 }}
-                            animate={{ scaleX: skill.level / 100 }}
-                            transition={{ duration: 1, delay: 0.5 }}
-                          />
-                        </ProgressBar>
-                      </SkillItem>
-                    ))}
-                  </SkillGrid>
-                )}
-              </AnimatePresence>
-            </SkillCategory>
-          ))}
-        </Section>
+                    {highlight.text}
+                  </BioHighlight>
+                  {index < bioHighlights.length - 1 ? ' ' : ''}
+                </React.Fragment>
+              ))}
+            </Bio>
 
-        <AnimatePresence>
-          {hoveredHighlight && (
-            <FloatingCard
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              style={{
-                left: mousePosition.x + 20,
-                top: mousePosition.y + 20,
-              }}
-            >
-              {hoveredHighlight.detail}
-            </FloatingCard>
-          )}
-        </AnimatePresence>
-      </ContentGrid>
-    </AboutContainer>
+            {Object.entries(skills).map(([category, skillList], index) => (
+              <SkillCategory
+                key={category}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+              >
+                <CategoryHeader>
+                  <h3 style={{ textTransform: 'uppercase' }}>{category}</h3>
+                  <ExpandButton
+                    onClick={() => setExpandedCategory(expandedCategory === category ? null : category)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    {expandedCategory === category ? '-' : '+'}
+                  </ExpandButton>
+                </CategoryHeader>
+
+                <AnimatePresence>
+                  {(expandedCategory === category || expandedCategory === null) && (
+                    <SkillGrid
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {skillList.map((skill) => (
+                        <SkillItem
+                          key={skill.name}
+                          whileHover={{ scale: 1.05, y: -5 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setSelectedSkill(skill)}
+                        >
+                          <h4>{skill.name}</h4>
+                          <ProgressBar>
+                            <ProgressFill
+                              initial={{ scaleX: 0 }}
+                              animate={{ scaleX: skill.level / 100 }}
+                              transition={{ duration: 1, delay: 0.5 }}
+                            />
+                          </ProgressBar>
+                        </SkillItem>
+                      ))}
+                    </SkillGrid>
+                  )}
+                </AnimatePresence>
+              </SkillCategory>
+            ))}
+          </Section>
+
+          <AnimatePresence>
+            {hoveredHighlight && (
+              <FloatingCard
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                style={{
+                  left: mousePosition.x + 20,
+                  top: mousePosition.y + 20,
+                }}
+              >
+                {hoveredHighlight.detail}
+              </FloatingCard>
+            )}
+          </AnimatePresence>
+        </ContentGrid>
+      </AboutContainer>
+    </motion.div>
   );
 };
 
