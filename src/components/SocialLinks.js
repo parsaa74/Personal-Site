@@ -25,12 +25,12 @@ const SocialLink = styled(motion.a)`
 `;
 
 const socialLinks = [
-  { name: 'Twitter', url: 'https://twitter.com/yourusername', icon: '𝕏' },
-  { name: 'Mastodon', url: 'https://mastodon.social/@yourusername', icon: '𝕄' },
-  { name: 'BlueSky', url: 'https://bsky.app/profile/yourusername', icon: '☁️' },
-  { name: 'LinkedIn', url: 'https://linkedin.com/in/yourusername', icon: '💼' },
-  { name: 'Dribbble', url: 'https://dribbble.com/yourusername', icon: '🏀' },
-  { name: 'Email', url: 'mailto:your@email.com', icon: '✉️' },
+  { name: 'Twitter', url: 'https://twitter.com/sighpaaa', icon: '𝕏' },
+  { name: 'Mastodon', url: 'https://mastodon.social/@parsaaz', icon: '𝕄' },
+  { name: 'BlueSky', url: 'https://bsky.app/profile/sighpaa.bsky.social', icon: '☁️' },
+  { name: 'LinkedIn', url: 'https://linkedin.com/in/parsaazari', icon: '💼' },
+  { name: 'Dribbble', url: 'https://dribbble.com/parsaa74', icon: '🏀' },
+  { name: 'Email', url: 'mailto:parsaazari28@proton.me', icon: '✉️' },
 ];
 
 const SocialLinks = () => {
