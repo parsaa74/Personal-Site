@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Navigation from './components/Navigation';
 import SocialLinks from './components/SocialLinks';
@@ -66,34 +66,36 @@ function App() {
   }
 
   return (
-    <LanguageProvider>
-      <AppContainer>
-        <CustomCursor mousePosition={mousePosition} />
-        <Navigation />
-        <SocialLinks />
-        <LanguageToggle />
-        <InteractiveNav />
-        <AnimatePresence mode="wait">
-          <ContentWrapper
-            key={location.pathname}
-            initial="initial"
-            animate="enter"
-            exit="exit"
-            variants={pageVariants}
-            transition={{ duration: 0.5 }}
-          >
-            <Suspense fallback={<LoadingScreen />}>
-              <Routes location={location}>
-                <Route path="/" element={<Home mousePosition={mousePosition} />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-              </Routes>
-            </Suspense>
-          </ContentWrapper>
-        </AnimatePresence>
-      </AppContainer>
-    </LanguageProvider>
+    <Router>
+      <LanguageProvider>
+        <AppContainer>
+          <CustomCursor mousePosition={mousePosition} />
+          <Navigation />
+          <SocialLinks />
+          <LanguageToggle />
+          <InteractiveNav />
+          <AnimatePresence mode="wait">
+            <ContentWrapper
+              key={location.pathname}
+              initial="initial"
+              animate="enter"
+              exit="exit"
+              variants={pageVariants}
+              transition={{ duration: 0.5 }}
+            >
+              <Suspense fallback={<LoadingScreen />}>
+                <Routes location={location}>
+                  <Route path="/" element={<Home mousePosition={mousePosition} />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </Suspense>
+            </ContentWrapper>
+          </AnimatePresence>
+        </AppContainer>
+      </LanguageProvider>
+    </Router>
   );
 }
 
