@@ -21,17 +21,17 @@ const ThreeScene = ({ mousePosition }) => {
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true, 
       alpha: true,
-      powerPreference: "high-performance" // Optimize for mobile
+      powerPreference: "high-performance"
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for better performance
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     mountRef.current.appendChild(renderer.domElement);
     
-    camera.position.z = isMobile ? 7 : 5; // Adjust camera for mobile
+    camera.position.z = isMobile ? 7 : 5;
     
-    // Create main geometry with reduced complexity for mobile
+    // Create main geometry
     const geometry = new THREE.IcosahedronGeometry(2, isMobile ? 0 : 1);
     const material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
@@ -43,7 +43,7 @@ const ThreeScene = ({ mousePosition }) => {
     mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
     
-    // Reduce particle count for mobile
+    // Particles setup
     const particlesCount = isMobile ? 2000 : 5000;
     const particlesGeometry = new THREE.BufferGeometry();
     const posArray = new Float32Array(particlesCount * 3);
@@ -126,8 +126,7 @@ const ThreeScene = ({ mousePosition }) => {
       handleInteractionMove(touch.clientX, touch.clientY);
     };
     
-    // Gyroscope handling for mobile
-    let gyroscope = null;
+    // Gyroscope handling
     if (isMobile && window.DeviceOrientationEvent) {
       const handleOrientation = (event) => {
         if (!isInteracting) {
@@ -142,16 +141,14 @@ const ThreeScene = ({ mousePosition }) => {
       window.addEventListener('deviceorientation', handleOrientation);
     }
     
-    // Animation with performance optimization
+    // Animation
     let frameId;
     const animate = () => {
       frameId = requestAnimationFrame(animate);
       
-      // Smooth rotation with damping
       mesh.rotation.x += (targetRotationX - mesh.rotation.x) * 0.05;
       mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.05;
       
-      // Reduced particle animation speed on mobile
       particlesMesh.rotation.x += isMobile ? 0.0002 : 0.0005;
       particlesMesh.rotation.y += isMobile ? 0.0002 : 0.0005;
       
@@ -159,7 +156,7 @@ const ThreeScene = ({ mousePosition }) => {
     };
     animate();
     
-    // Handle window resize
+    // Handle resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -182,12 +179,10 @@ const ThreeScene = ({ mousePosition }) => {
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleInteractionEnd);
-      if (gyroscope) window.removeEventListener('deviceorientation', handleOrientation);
       
       cancelAnimationFrame(frameId);
       mountRef.current?.removeChild(renderer.domElement);
       
-      // Dispose resources
       geometry.dispose();
       material.dispose();
       particlesGeometry.dispose();
