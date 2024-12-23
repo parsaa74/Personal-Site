@@ -1,63 +1,44 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import styled from 'styled-components';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const TouchArea = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  touch-action: none;
-  pointer-events: ${props => props.active ? 'auto' : 'none'};
-`;
+const TouchHandler = ({ children }) => {
+  const navigate = useNavigate();
+  let touchStartX = 0;
+  let touchEndX = 0;
 
-const TouchHandler = ({ onSwipe, children }) => {
-  const controls = useAnimation();
-  const touchRef = useRef({ startX: 0, startY: 0 });
-  const thresholdDistance = 50; // minimum distance for swipe
-
-  const handleTouchStart = (e) => {
-    const touch = e.touches[0];
-    touchRef.current = {
-      startX: touch.clientX,
-      startY: touch.clientY,
-      timestamp: Date.now()
+  useEffect(() => {
+    const handleTouchStart = (e) => {
+      touchStartX = e.touches[0].clientX;
     };
-  };
 
-  const handleTouchMove = (e) => {
-    if (!touchRef.current.startX) return;
+    const handleTouchEnd = (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      handleSwipe();
+    };
 
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - touchRef.current.startX;
-    const deltaY = touch.clientY - touchRef.current.startY;
-    const deltaTime = Date.now() - touchRef.current.timestamp;
+    const handleSwipe = () => {
+      const swipeDistance = touchEndX - touchStartX;
+      const minSwipeDistance = 50;
 
-    // Calculate velocity
-    const velocity = Math.abs(deltaX) / deltaTime;
+      if (Math.abs(swipeDistance) > minSwipeDistance) {
+        if (swipeDistance > 0) {
+          navigate(-1); // Go back
+        } else {
+          navigate(1); // Go forward
+        }
+      }
+    };
 
-    if (Math.abs(deltaX) > thresholdDistance && velocity > 0.5) {
-      const direction = deltaX > 0 ? 'right' : 'left';
-      onSwipe?.(direction, { deltaX, deltaY, velocity });
-      touchRef.current = { startX: 0, startY: 0 };
-    }
-  };
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchend', handleTouchEnd);
 
-  const handleTouchEnd = () => {
-    touchRef.current = { startX: 0, startY: 0 };
-  };
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [navigate]);
 
-  return (
-    <TouchArea
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      {children}
-    </TouchArea>
-  );
+  return <>{children}</>;
 };
 
 export default TouchHandler; 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import './styles/fonts.css';
 
 * {
   margin: 0;
@@ -8,49 +8,28 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-mono), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #1a1a1a;
+  background: black;
   color: white;
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+code {
+  font-family: var(--font-mono), source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-/* Responsive Typography */
-html {
-  font-size: 16px;
+.font-mono {
+  font-family: var(--font-mono), monospace;
 }
 
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-/* Hide cursor on touch devices */
-@media (hover: none) {
-  * {
-    cursor: auto !important;
-  }
-  
-  .custom-cursor {
-    display: none !important;
-  }
-}
-
-/* Responsive spacing */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
+.whitespace-pre {
+  white-space: pre;
 }

@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const Cursor = styled(motion.div)`
   position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: difference;
-  
-  &.outer {
-    width: 40px;
-    height: 40px;
-    border: 2px solid white;
-    border-radius: 50%;
-  }
-  
-  &.inner {
-    width: 8px;
-    height: 8px;
-    background: white;
-    border-radius: 50%;
-  }
 `;
 
 const InteractiveCursor = () => {
@@ -32,58 +22,37 @@ const InteractiveCursor = () => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseOver = (e) => {
-      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
-        setIsHovering(true);
-      }
-    };
-
-    const handleMouseOut = () => {
-      setIsHovering(false);
-    };
+    const handleHoverStart = () => setIsHovering(true);
+    const handleHoverEnd = () => setIsHovering(false);
 
     window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut);
+    document.querySelectorAll('a, button').forEach(element => {
+      element.addEventListener('mouseenter', handleHoverStart);
+      element.addEventListener('mouseleave', handleHoverEnd);
+    });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseout', handleMouseOut);
+      document.querySelectorAll('a, button').forEach(element => {
+        element.removeEventListener('mouseenter', handleHoverStart);
+        element.removeEventListener('mouseleave', handleHoverEnd);
+      });
     };
   }, []);
 
   return (
-    <>
-      <Cursor
-        className="outer"
-        animate={{
-          x: mousePosition.x - 20,
-          y: mousePosition.y - 20,
-          scale: isHovering ? 1.5 : 1
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 150,
-          damping: 15,
-          mass: 0.5
-        }}
-      />
-      <Cursor
-        className="inner"
-        animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
-          scale: isHovering ? 0.5 : 1
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 250,
-          damping: 15,
-          mass: 0.2
-        }}
-      />
-    </>
+    <Cursor
+      animate={{
+        x: mousePosition.x - 10,
+        y: mousePosition.y - 10,
+        scale: isHovering ? 1.5 : 1,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 500,
+        damping: 28,
+      }}
+    />
   );
 };
 

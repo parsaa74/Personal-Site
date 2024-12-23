@@ -1,43 +1,31 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { LanguageContext } from '../contexts/LanguageContext';
+import React from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
+import { Button } from './ui/button';
+import { Languages } from 'lucide-react';
 
-const ToggleContainer = styled(motion.div)`
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 100;
-`;
-
-const ToggleButton = styled(motion.button)`
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: white;
-    color: black;
-  }
-`;
-
-const LanguageToggle = () => {
-  const { language, setLanguage } = useContext(LanguageContext);
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'de' : 'en');
-  };
-
+const LanguageToggle = ({ currentLang, onLanguageChange }) => {
   return (
-    <ToggleContainer>
-      <ToggleButton onClick={toggleLanguage}>
-        {language === 'en' ? 'DE' : 'EN'}
-      </ToggleButton>
-    </ToggleContainer>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button>
+          <Languages className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-white" />
+          <span className="sr-only">Toggle language</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={() => onLanguageChange('en')}>
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onLanguageChange('de')}>
+          Deutsch
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
