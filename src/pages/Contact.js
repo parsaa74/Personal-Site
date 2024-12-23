@@ -1,127 +1,147 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { 
+  Github, 
+  Twitter, 
+  Linkedin, 
+  Globe, 
+  Dribbble, 
+  Mail 
+} from 'lucide-react';
 
 const ContactContainer = styled.div`
   min-height: 100vh;
-  padding: 6rem 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: white;
+`;
+
+const EmailSection = styled(motion.div)`
+  margin: 2rem 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
   display: flex;
   align-items: center;
+  gap: 1rem;
 `;
 
-const ContactForm = styled(motion.form)`
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-`;
-
-const FormGroup = styled(motion.div)`
-  margin-bottom: 2rem;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 1rem;
-  background: transparent;
-  border: 1px solid white;
+const EmailLink = styled.a`
   color: white;
-  font-size: 1rem;
-  font-family: inherit;
+  text-decoration: none;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   
-  &:focus {
-    outline: none;
-    border-color: #666;
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
-const TextArea = styled(Input).attrs({ as: 'textarea' })`
-  min-height: 150px;
-  resize: vertical;
+const SocialGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
 `;
 
-const Button = styled(motion.button)`
-  padding: 1rem 2rem;
-  background: white;
-  color: black;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  font-family: inherit;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+const SocialCard = styled(motion.a)`
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: white;
+  transition: background 0.3s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your form submission logic here
-    console.log('Form submitted:', formData);
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const socialLinks = [
+    {
+      name: 'Email',
+      url: 'mailto:parsaazari28@proton.me',
+      icon: <Mail size={24} />,
+    },
+    {
+      name: 'GitHub',
+      url: 'https://github.com/parsaa74',
+      icon: <Github size={24} />,
+    },
+    {
+      name: 'Twitter',
+      url: 'https://x.com/sighpaaa',
+      icon: <Twitter size={24} />,
+    },
+    {
+      name: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/parsaazari/',
+      icon: <Linkedin size={24} />,
+    },
+    {
+      name: 'Dribbble',
+      url: 'https://dribbble.com/parsaa74',
+      icon: <Dribbble size={24} />,
+    },
+    {
+      name: 'BlueSky',
+      url: 'https://bsky.app/profile/sighpaa.bsky.social',
+      icon: <Globe size={24} />,
+    },
+    {
+      name: 'Mastodon',
+      url: 'https://mastodon.social/@parsaaz',
+      icon: <Globe size={24} />,
+    },
+  ];
 
   return (
     <ContactContainer>
-      <ContactForm
-        onSubmit={handleSubmit}
-        initial={{ opacity: 0, y: 50 }}
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.5 }}
+        style={{ fontSize: '2.5rem', marginBottom: '1rem' }}
       >
-        <FormGroup>
-          <Label>Name</Label>
-          <Input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Email</Label>
-          <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Message</Label>
-          <TextArea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-          />
-        </FormGroup>
-        <Button
-          type="submit"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Send Message
-        </Button>
-      </ContactForm>
+        Let's Connect
+      </motion.h1>
+      
+      <EmailSection
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <EmailLink href="mailto:parsaazari28@proton.me">
+          <Mail size={24} />
+          parsaazari28@proton.me
+        </EmailLink>
+      </EmailSection>
+      
+      <SocialGrid>
+        {socialLinks.map((link, index) => (
+          <SocialCard
+            key={link.name}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            whileHover={{ scale: 1.02 }}
+          >
+            {link.icon}
+            <span>{link.name}</span>
+          </SocialCard>
+        ))}
+      </SocialGrid>
     </ContactContainer>
   );
 };

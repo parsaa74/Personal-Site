@@ -1,10 +1,9 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import Navigation from './components/Navigation';
-import LoadingState from './components/LoadingState';
-
-// Import your pages
+import Layout from './components/Layout';
+import AsciiBackground from './components/AsciiBackground';
+import { LanguageProvider } from './context/LanguageContext';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
@@ -12,30 +11,38 @@ import Contact from './pages/Contact';
 
 const AppContainer = styled.div`
   min-height: 100vh;
-  background: #1a1a1a;
-  color: white;
+  position: relative;
+  background: black;
 `;
 
-const ContentContainer = styled.main`
-  padding-top: 80px; // Adjust based on your navigation height
+const LoadingFallback = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  color: white;
 `;
 
 function App() {
   return (
-    <AppContainer>
-      <Navigation />
-      <ContentContainer>
-        <Suspense fallback={<LoadingState />}>
+    <LanguageProvider>
+      <AppContainer>
+        <AsciiBackground />
+        <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<Home />} />
+            <Route path="/" element={<Layout><Home /></Layout>} />
+            <Route path="/about" element={<Layout><About /></Layout>} />
+            <Route path="/projects" element={<Layout><Projects /></Layout>} />
+            <Route path="/contact" element={<Layout><Contact /></Layout>} />
           </Routes>
         </Suspense>
-      </ContentContainer>
-    </AppContainer>
+      </AppContainer>
+    </LanguageProvider>
   );
 }
 

@@ -1,69 +1,78 @@
 import React from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 const StaggerContainer = styled(motion.div)`
   display: flex;
-  flex-direction: ${props => props.direction || 'column'};
-  gap: ${props => props.gap || '1rem'};
-`;
-
-const FadeInElement = styled(motion.div)`
-  opacity: 0;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const slideVariants = {
-  hidden: direction => ({
-    x: direction === 'left' ? -100 : direction === 'right' ? 100 : 0,
-    y: direction === 'up' ? 100 : direction === 'down' ? -100 : 0,
-    opacity: 0
-  }),
-  visible: {
-    x: 0,
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.6, 0.05, -0.01, 0.9]
-    }
-  }
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
 };
 
-const staggerContainerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
+export const StaggerAnimation = ({ children, delay = 0.2 }) => {
+  return (
+    <StaggerContainer
+      initial="hidden"
+      animate="visible"
+      variants={{
+        visible: {
+          transition: {
+            staggerChildren: 0.1,
+            delayChildren: delay
+          }
+        }
+      }}
+    >
+      {React.Children.map(children, (child, index) => (
+        <motion.div
+          key={index}
+          variants={slideVariants}
+          transition={{ duration: 0.5 }}
+        >
+          {child}
+        </motion.div>
+      ))}
+    </StaggerContainer>
+  );
 };
 
-export const StaggerAnimation = ({ children, direction, gap, delay = 0 }) => (
-  <StaggerContainer
-    direction={direction}
-    gap={gap}
-    variants={staggerContainerVariants}
-    initial="hidden"
-    animate="visible"
-    transition={{ delay }}
-  >
-    {React.Children.map(children, child => (
-      <FadeInElement variants={slideVariants('up')}>
-        {child}
-      </FadeInElement>
-    ))}
-  </StaggerContainer>
-);
+export const SlideIn = ({ children, delay = 0 }) => {
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={slideVariants}
+      transition={{ duration: 0.5, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
-export const SlideIn = ({ children, direction = 'up', delay = 0 }) => (
-  <motion.div
-    variants={slideVariants}
-    initial="hidden"
-    animate="visible"
-    custom={direction}
-    transition={{ delay }}
-  >
-    {children}
-  </motion.div>
-); 
+export const FadeIn = ({ children, delay = 0 }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export const ScaleIn = ({ children, delay = 0 }) => {
+  return (
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}; 
