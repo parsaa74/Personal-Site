@@ -18,7 +18,7 @@ const AsciiContainer = styled.div`
 `;
 
 const AsciiContent = styled.div`
-  font-family: var(--font-mono);
+  font-family: 'Moderat';
   white-space: pre;
   line-height: 1.2;
   font-size: clamp(6px, 1vw, 10px);

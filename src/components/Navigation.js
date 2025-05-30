@@ -1,69 +1,52 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import LanguageToggle from './LanguageToggle';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
-const Nav = styled(motion.nav)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 1.5rem;
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-`;
+const Navigation = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { t } = useLanguage();
 
-const NavLinks = styled.div`
-  display: flex;
-  gap: 2rem;
-`;
+  const routes = [
+    { path: '/about', label: 'nav.about' },
+    { path: '/projects', label: 'nav.projects' },
+    { path: '/contact', label: 'nav.contact' }
+  ];
 
-const NavLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  font-size: 1.1rem;
-  position: relative;
-  padding: 0.5rem;
-  
-  &:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: white;
-    transition: width 0.3s ease;
-  }
-
-  &:hover:after {
-    width: 100%;
-  }
-`;
-
-const Navigation = ({ language, onLanguageChange }) => {
   return (
-    <Nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8 }}
-    >
-      <NavLinks>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <NavLink to="/projects">Works</NavLink>
-        <NavLink to="/contact">Contact</NavLink>
-      </NavLinks>
-      <LanguageToggle 
-        currentLang={language} 
-        onLanguageChange={onLanguageChange}
-      />
-    </Nav>
+    <nav style={{
+      position: 'fixed',
+      top: '20px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      display: 'flex',
+      gap: '20px',
+      padding: '10px 20px',
+      background: 'rgba(255, 255, 255, 0.95)',
+      borderRadius: '8px',
+      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+      zIndex: 1000
+    }}>
+      {routes.map((route) => (
+        <button
+          key={route.path}
+          onClick={() => navigate(route.path)}
+          style={{
+            padding: '8px 16px',
+            background: location.pathname === route.path ? '#4444ff' : 'transparent',
+            color: location.pathname === route.path ? 'white' : '#333',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: '500',
+            transition: 'all 0.2s ease'
+          }}
+        >
+          {t(route.label)}
+        </button>
+      ))}
+    </nav>
   );
 };
 

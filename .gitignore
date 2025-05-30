@@ -16,7 +16,7 @@
 .env.test.local
 .env.production.local
 .env
-
+.cursor
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -29,3 +29,10 @@ yarn-error.log*
 
 # Vercel
 .vercel
+
+# AI-related content (excluded for public repository)
+src/pages/SemanticBiome.js
+EXPERIMENT_PAGES_CHANGELOG.md
+
+# Backup files
+*.bak

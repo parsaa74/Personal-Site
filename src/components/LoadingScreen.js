@@ -18,7 +18,7 @@ const LoadingContainer = styled(motion.div)`
 const LoadingText = styled(motion.h2)`
   font-size: clamp(2rem, 5vw, 4rem);
   color: #fff;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Moderat';
 `;
 
 const LoadingScreen = () => {

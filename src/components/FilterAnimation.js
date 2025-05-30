@@ -11,9 +11,9 @@ const FilterContainer = styled(motion.div)`
 
 const FilterButton = styled(motion.button)`
   padding: 0.8rem 1.5rem;
-  border: 2px solid ${props => props.active ? 'white' : 'rgba(255,255,255,0.3)'};
-  background: ${props => props.active ? 'white' : 'transparent'};
-  color: ${props => props.active ? 'black' : 'white'};
+  border: 2px solid ${props => props.$active ? 'white' : 'rgba(255,255,255,0.3)'};
+  background: ${props => props.$active ? 'white' : 'transparent'};
+  color: ${props => props.$active ? 'black' : 'white'};
   border-radius: 30px;
   cursor: pointer;
   font-size: 1rem;
@@ -61,7 +61,7 @@ const FilterAnimation = ({ categories, activeFilter, onFilterChange }) => {
         {categories.map((category, i) => (
           <FilterButton
             key={category.id}
-            active={activeFilter === category.id}
+            $active={activeFilter === category.id}
             onClick={() => onFilterChange(category.id)}
             as={motion.button}
             custom={i}
