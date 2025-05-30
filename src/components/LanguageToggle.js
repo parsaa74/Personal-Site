@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +9,9 @@ import {
 import { Button } from './ui/button';
 import { Languages } from 'lucide-react';
 
-const LanguageToggle = ({ currentLang, onLanguageChange }) => {
+const LanguageToggle = () => {
+  const { language, setLanguage } = useLanguage();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -18,11 +21,11 @@ const LanguageToggle = ({ currentLang, onLanguageChange }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => onLanguageChange('en')}>
-          English
+        <DropdownMenuItem onClick={() => setLanguage('en')}>
+          English {language === 'en' && '✓'}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onLanguageChange('de')}>
-          Deutsch
+        <DropdownMenuItem onClick={() => setLanguage('de')}>
+          Deutsch {language === 'de' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

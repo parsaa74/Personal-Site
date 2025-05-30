@@ -26,7 +26,6 @@ const InteractiveNav = () => {
     
     // Create navigation elements
     const sections = [
-      { path: '/', label: 'HOME', position: new THREE.Vector3(-3, 2, 0) },
       { path: '/projects', label: 'PROJECTS', position: new THREE.Vector3(1, 2, 0) },
       { path: '/about', label: 'ABOUT', position: new THREE.Vector3(-3, -1, 0) },
       { path: '/contact', label: 'CONTACT', position: new THREE.Vector3(1, -1, 0) }

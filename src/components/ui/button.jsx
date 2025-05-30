@@ -14,6 +14,7 @@ const StyledButton = styled.button`
   border: none;
   cursor: pointer;
   transition: all 0.2s;
+  font-family: 'Moderat';
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);

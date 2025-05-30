@@ -1,7 +1,8 @@
- import React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Navigation from './Navigation';
 import Footer from './Footer';
+import { useLocation, Outlet } from 'react-router-dom';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -9,7 +10,8 @@ const PageWrapper = styled.div`
   flex-direction: column;
   position: relative;
   z-index: 1;
-  padding-top: 80px; // Account for fixed navigation
+  padding-top: 80px;
+  background: ${props => props.isHome ? 'transparent' : 'rgba(0, 0, 0, 0.3)'};
 `;
 
 const ContentWrapper = styled.div`
@@ -23,12 +25,15 @@ const ContentWrapper = styled.div`
   justify-content: center;
 `;
 
-const Layout = ({ children, language, onLanguageChange }) => {
+const Layout = () => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
   return (
-    <PageWrapper>
-      <Navigation language={language} onLanguageChange={onLanguageChange} />
+    <PageWrapper isHome={isHome}>
+      <Navigation />
       <ContentWrapper>
-        {children}
+        <Outlet />
       </ContentWrapper>
       <Footer />
     </PageWrapper>

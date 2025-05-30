@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const LanguageContext = createContext();
 
@@ -14,7 +14,6 @@ export const translations = {
       title: 'Creative Developer',
       subtitle: 'Building digital experiences',
     },
-    // Add more translations as needed
   },
   de: {
     nav: {
@@ -27,7 +26,6 @@ export const translations = {
       title: 'Kreativer Entwickler',
       subtitle: 'Digitale Erlebnisse gestalten',
     },
-    // Add more translations as needed
   },
 };
 

@@ -71,7 +71,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
               exit={{ y: -20, opacity: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <StyledLink to="/" onClick={toggleMenu}>Home</StyledLink>
+              <StyledLink to="/about" onClick={toggleMenu}>About</StyledLink>
             </MenuItem>
             <MenuItem
               initial={{ y: 20, opacity: 0 }}
@@ -79,21 +79,13 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
               exit={{ y: -20, opacity: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <StyledLink to="/about" onClick={toggleMenu}>About</StyledLink>
-            </MenuItem>
-            <MenuItem
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ delay: 0.3 }}
-            >
               <StyledLink to="/projects" onClick={toggleMenu}>Projects</StyledLink>
             </MenuItem>
             <MenuItem
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.3 }}
             >
               <StyledLink to="/contact" onClick={toggleMenu}>Contact</StyledLink>
             </MenuItem>

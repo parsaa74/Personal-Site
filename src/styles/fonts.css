@@ -1,9 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+/* Define Moderat font faces */
+@font-face {
+  font-family: 'Moderat';
+  src: url('../../public/fonts/Moderat-Regular.woff2') format('woff2'),
+       url('../../public/fonts/Moderat-Regular.woff') format('woff'),
+       url('../../public/fonts/Moderat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Moderat';
+  src: url('../../public/fonts/Moderat-Bold.woff2') format('woff2'),
+       url('../../public/fonts/Moderat-Bold.woff') format('woff'),
+       url('../../public/fonts/Moderat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Moderat';
+  src: url('../../public/fonts/Moderat-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fleya font face */
+@font-face {
+  font-family: 'Fleya';
+  src: url('../../public/fonts/Fleya-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  --font-mono: 'Space Mono', monospace;
+  --font-primary: 'Moderat';
+  --font-mono: 'Moderat';
 }
 
 * {
-  font-family: var(--font-mono);
+  font-family: var(--font-primary);
 } 
