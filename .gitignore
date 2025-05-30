@@ -34,5 +34,9 @@ yarn-error.log*
 src/pages/SemanticBiome.js
 EXPERIMENT_PAGES_CHANGELOG.md
 
+# Large image assets (to reduce repository size)
+public/smoke-image/
+Inter/
+
 # Backup files
 *.bak
