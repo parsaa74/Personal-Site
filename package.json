@@ -1,6 +1,7 @@
 {
   "name": "crcode",
   "version": "1.0.0",
+  "homepage": "https://parsaa74.github.io/Personal-Site",
   "private": true,
   "dependencies": {
     "@aredotna/icons": "0.2.0",
