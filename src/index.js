@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
-import { future } from 'react-router-dom';
+import { unstable_useBlocker as useBlocker, unstable_usePrompt as usePrompt } from 'react-router-dom';
 
-// Enable React Router's future flags to eliminate warnings - move this before App import
-future.v7_startTransition = true;
-future.v7_relativeSplatPath = true;
+// Note: future flags syntax changed, we'll just remove the flags
+// and update any deprecated APIs directly
 
 import App from './App';
 import './styles/fonts.css';
