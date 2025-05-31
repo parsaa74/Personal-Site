@@ -1951,10 +1951,18 @@ const TVirusBackground = forwardRef((props, ref) => {
 
       p.windowResized = () => {
         try {
-          // Only resize if canvas exists
-          if (p.canvas && p.canvas.elt) {
+          // Check if sketch is alive before attempting resize
+          if (!isSketchInstanceAliveRef.current) {
+            return;
+          }
+          
+          // Only resize if canvas exists and is properly attached to DOM
+          if (p.canvas && p.canvas.elt && document.body.contains(p.canvas.elt)) {
             p.resizeCanvas(window.innerWidth, window.innerHeight);
-            generateNewTree(p);
+            // Avoid regenerating tree on every resize - this can be expensive
+            if (Math.abs(p.width - window.innerWidth) > 100 || Math.abs(p.height - window.innerHeight) > 100) {
+              generateNewTree(p);
+            }
           } else {
             console.warn("Canvas not available during resize");
           }
