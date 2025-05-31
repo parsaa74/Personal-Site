@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
+import { future } from 'react-router-dom';
+
+// Enable React Router's future flags to eliminate warnings - move this before App import
+future.v7_startTransition = true;
+future.v7_relativeSplatPath = true;
+
 import App from './App';
 import './styles/fonts.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { future } from 'react-router-dom';
-
-// Enable React Router's future flags to eliminate warnings
-future.v7_startTransition = true;
-future.v7_relativeSplatPath = true;
 
 const GlobalStyle = createGlobalStyle`
   * {

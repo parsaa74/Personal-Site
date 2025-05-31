@@ -1125,38 +1125,25 @@ const TVirusBackground = forwardRef((props, ref) => {
     // Safe cursor function to avoid "elt" errors
     function setCursorSafely(p, cursorType) {
       try {
-        if (p && p.cursor) {
-          if (p.canvas && p.canvas.elt) {
-            // Add check for DOM connection
-            if (typeof p.canvas.elt.isConnected === 'boolean' && !p.canvas.elt.isConnected) {
-              console.warn(
-                `setCursorSafely: Not attempting p.cursor(${cursorType}) because p.canvas.elt is not connected to the DOM.`
-              );
-              return; // Don't proceed if not connected
-            }
-            try {
-              p.cursor(cursorType);
-            } catch (innerE) {
-              console.warn(
-                `setCursorSafely: Inner error during p.cursor(${cursorType}). ` +
-                `p.canvas: ${p.canvas}, p.canvas.elt: ${p.canvas ? String(p.canvas.elt) : 'p.canvas is null'}, isConnected: ${p.canvas && p.canvas.elt ? p.canvas.elt.isConnected : 'N/A'}. Error:`, innerE
-              );
-            }
+        if (!p || !p.cursor) {
+          return;
+        }
+        
+        // Only attempt to set cursor if canvas exists and is connected to DOM
+        if (p.canvas && typeof p.canvas === 'object') {
+          // For p5.js v2.0+, sometimes canvas.elt is not defined but canvas is valid
+          // Check if either condition passes
+          if ((p.canvas.elt && p.canvas.elt.isConnected) || 
+              (p.canvas instanceof HTMLCanvasElement && document.body.contains(p.canvas))) {
+            p.cursor(cursorType);
           } else {
-            console.warn(
-              `setCursorSafely: Not attempting p.cursor(${cursorType}) because ` +
-              `p.canvas is ${p.canvas} or p.canvas.elt is ${p.canvas ? String(p.canvas.elt) : 'p.canvas is null'}.`
-            );
+            // Don't log warnings during normal operation to reduce console noise
+            // console.warn(`setCursorSafely: Canvas not properly connected to DOM`);
           }
-        } else {
-          console.warn(`setCursorSafely: p or p.cursor is not available.`);
         }
       } catch (e) {
-        // This outer catch is a fallback, should ideally not be reached if inner checks are robust.
-        console.error(
-          `setCursorSafely: Outer error for p.cursor(${cursorType}). ` +
-          `p.canvas: ${p.canvas}, p.canvas.elt: ${p.canvas ? String(p.canvas.elt) : 'p.canvas is null'}. Error:`, e
-        );
+        // Silence the error to reduce console noise
+        // console.error(`setCursorSafely error:`, e);
       }
     }
 
@@ -1956,15 +1943,26 @@ const TVirusBackground = forwardRef((props, ref) => {
             return;
           }
           
-          // Only resize if canvas exists and is properly attached to DOM
-          if (p.canvas && p.canvas.elt && document.body.contains(p.canvas.elt)) {
+          // Check if canvas is valid before attempting resize
+          let canvasValid = false;
+          
+          if (p.canvas) {
+            if (p.canvas.elt && document.body.contains(p.canvas.elt)) {
+              canvasValid = true;
+            } else if (p.canvas instanceof HTMLCanvasElement && document.body.contains(p.canvas)) {
+              canvasValid = true;
+            }
+          }
+          
+          if (canvasValid) {
             p.resizeCanvas(window.innerWidth, window.innerHeight);
             // Avoid regenerating tree on every resize - this can be expensive
             if (Math.abs(p.width - window.innerWidth) > 100 || Math.abs(p.height - window.innerHeight) > 100) {
               generateNewTree(p);
             }
           } else {
-            console.warn("Canvas not available during resize");
+            // Silence the warning to reduce console noise
+            // console.warn("Canvas not available during resize");
           }
         } catch (e) {
           console.error("Error in window resize:", e);
