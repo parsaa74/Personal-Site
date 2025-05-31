@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting to index.html</title>
+  <meta http-equiv="refresh" content="0; URL=/">
+  <script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // MIT License
+    // This script takes the current URL and converts the path and query
+    // parameters into a route that the SPA router will recognize.
+    var pathSegments = window.location.pathname.split('/');
+    var repoName = 'Personal-Site'; // Replace with your repository name
+    var isRepoPage = pathSegments[1] === repoName;
+    var segment = isRepoPage ? pathSegments.slice(2).join('/') : pathSegments.slice(1).join('/');
+    
+    if (segment !== '') {
+      window.location.href = window.location.origin + 
+        (isRepoPage ? '/' + repoName : '') + 
+        '/#/' + segment;
+    } else {
+      window.location.href = window.location.origin + 
+        (isRepoPage ? '/' + repoName : '') + 
+        '/';
+    }
+  </script>
+</head>
+<body>
+  <p>If you are not redirected automatically, follow this <a href="/">link</a>.</p>
+</body>
+</html> 
