@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 import App from './App';
 import './styles/fonts.css';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+import { future } from 'react-router-dom';
+
+// Enable React Router's future flags to eliminate warnings
+future.v7_startTransition = true;
+future.v7_relativeSplatPath = true;
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -29,4 +36,9 @@ root.render(
     <GlobalStyle />
     <App />
   </React.StrictMode>
-); 
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals(); 

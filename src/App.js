@@ -1,5 +1,5 @@
 import React, { useRef, useState, createContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { DarkModeProvider } from './context/DarkModeContext';
 // import SmokeSlideshow from './components/SmokeSlideshow'; // Comment out SmokeSlideshow
 import TVirusBackground from './components/TVirusBackground'; // Import new background
