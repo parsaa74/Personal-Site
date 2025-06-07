@@ -5,6 +5,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import LoadingState from './components/LoadingState';
 // import SmokeSlideshow from './components/SmokeSlideshow'; // Comment out SmokeSlideshow
 import TVirusBackground from './components/TVirusBackground'; // Import new background
+import MobileNavigation from './components/MobileNavigation'; // Import mobile navigation
 // import BrutalistNavigation from './components/BrutalistNavigation';
 import styled from 'styled-components';
 
@@ -44,6 +45,12 @@ const AppContainer = styled.div`
   min-height: 100vh;
   background: #000000;
   overflow-x: hidden;
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    min-height: 100vh;
+    min-height: -webkit-fill-available; /* Better mobile viewport handling */
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -102,6 +109,9 @@ const AppContent = () => {
   return (
     <AppContext.Provider value={{ activeSection, setActiveSection, tvirusRef }}>
       <AppContainer>
+        {/* Mobile Navigation */}
+        <MobileNavigation />
+        
         {/* TVirusBackground - shown for main sections */}
         <BackgroundWrapper showBackground={showBackground}>
           <TVirusBackground ref={tvirusRef} onSectionClick={handleNavigation} />

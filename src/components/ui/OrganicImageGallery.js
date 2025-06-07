@@ -21,6 +21,17 @@ const GalleryContainer = styled.div`
   gap: 2rem;
   margin-top: 2rem;
   width: 100%;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 // Individual gallery item with branch-inspired animations
@@ -62,6 +73,16 @@ const ImageInfo = styled.div`
   color: ${props => props.isLight ? '#000' : '#fff'};
   border-radius: 0 0 12px 12px;
   backdrop-filter: blur(10px);
+  
+  @media (max-width: 768px) {
+    padding: 1.2rem 0.8rem 0.8rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem 0.6rem 0.6rem;
+  }
 `;
 
 // Title with particle-like text shadow
@@ -123,6 +144,18 @@ const LightboxImage = styled.img`
       opacity: 1;
     }
   `} 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  
+  @media (max-width: 768px) {
+    max-width: 95vw;
+    max-height: 85vh;
+    border-radius: 6px;
+  }
+  
+  @media (max-width: 480px) {
+    max-width: 98vw;
+    max-height: 80vh;
+    border-radius: 4px;
+  }
 `;
 
 // Navigation dots with particle styling
