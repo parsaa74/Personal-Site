@@ -31,7 +31,6 @@ yarn-error.log*
 .vercel
 
 # AI-related content (excluded for public repository)
-src/pages/SemanticBiome.js
 EXPERIMENT_PAGES_CHANGELOG.md
 
 # Large image assets (to reduce repository size)
