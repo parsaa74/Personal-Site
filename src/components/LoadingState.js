@@ -1,52 +1,44 @@
 import React from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import styled, { keyframes } from 'styled-components';
 
-const LoadingContainer = styled(motion.div)`
-  width: 100%;
-  height: 100vh;
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const LoadingContainer = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  background: #1a1a1a;
+  justify-content: center;
+  height: 100vh;
+  background: #000000;
+  color: #ffffff;
+  font-family: 'Moderat', Arial, sans-serif;
 `;
 
-const LoadingDot = styled(motion.div)`
-  width: 12px;
-  height: 12px;
-  background: white;
+const Spinner = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid #ffffff;
   border-radius: 50%;
-  margin: 0 4px;
+  animation: ${spin} 1s linear infinite;
+  margin-bottom: 1rem;
 `;
 
-const loadingVariants = {
-  initial: {
-    y: 0
-  },
-  animate: {
-    y: [0, -20, 0],
-    transition: {
-      duration: 0.8,
-      repeat: Infinity,
-      ease: 'easeInOut'
-    }
-  }
-};
+const LoadingText = styled.p`
+  font-size: 0.9rem;
+  opacity: 0.7;
+  letter-spacing: 1px;
+  margin: 0;
+`;
 
-const LoadingState = () => {
+const LoadingState = ({ text = "Loading..." }) => {
   return (
     <LoadingContainer>
-      {[0, 1, 2].map((i) => (
-        <LoadingDot
-          key={i}
-          variants={loadingVariants}
-          initial="initial"
-          animate="animate"
-          transition={{
-            delay: i * 0.15
-          }}
-        />
-      ))}
+      <Spinner />
+      <LoadingText>{text}</LoadingText>
     </LoadingContainer>
   );
 };

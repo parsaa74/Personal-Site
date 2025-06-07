@@ -1,22 +1,40 @@
-import React, { useRef, useState, createContext } from 'react';
+import React, { useRef, useState, createContext, Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { DarkModeProvider } from './context/DarkModeContext';
+import ErrorBoundary from './components/ErrorBoundary';
+import LoadingState from './components/LoadingState';
 // import SmokeSlideshow from './components/SmokeSlideshow'; // Comment out SmokeSlideshow
 import TVirusBackground from './components/TVirusBackground'; // Import new background
 // import BrutalistNavigation from './components/BrutalistNavigation';
-import Home from './pages/Home';
-import About from './pages/About';
-import Work from './pages/Work';
-import Contact from './pages/Contact';
-import Experiments from './pages/Experiments';
-import SoloPerformances from './pages/SoloPerformances';
-import GroupPerformances from './pages/GroupPerformances';
-import FilmPractices from './pages/FilmPractices';
-import GermanArtSchools from './pages/GermanArtSchools';
-import ThreeDPortfolio from './pages/ThreeDPortfolio';
-import SemanticBiome from './pages/SemanticBiome';
-import PhilosophicalToys from './pages/PhilosophicalToys';
 import styled from 'styled-components';
+
+// Helper function to handle dynamic import errors
+const retryImport = (fn, retries = 3, delay = 1000) => {
+  return fn().catch((error) => {
+    if (retries <= 0) {
+      throw error;
+    }
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(retryImport(fn, retries - 1, delay));
+      }, delay);
+    });
+  });
+};
+
+// Lazy load components for better performance with retry functionality
+const Home = lazy(() => retryImport(() => import('./pages/Home')));
+const About = lazy(() => retryImport(() => import('./pages/About')));
+const Work = lazy(() => retryImport(() => import('./pages/Work')));
+const Contact = lazy(() => retryImport(() => import('./pages/Contact')));
+const Experiments = lazy(() => retryImport(() => import('./pages/Experiments')));
+const SoloPerformances = lazy(() => retryImport(() => import('./pages/SoloPerformances')));
+const GroupPerformances = lazy(() => retryImport(() => import('./pages/GroupPerformances')));
+const FilmPractices = lazy(() => retryImport(() => import('./pages/FilmPractices')));
+const GermanArtSchools = lazy(() => retryImport(() => import('./pages/GermanArtSchools')));
+const ThreeDPortfolio = lazy(() => retryImport(() => import('./pages/ThreeDPortfolio')));
+const SemanticBiome = lazy(() => retryImport(() => import('./pages/SemanticBiome')));
+const PhilosophicalToys = lazy(() => retryImport(() => import('./pages/PhilosophicalToys')));
 
 // Create a context to share state between components
 export const AppContext = createContext();
@@ -91,20 +109,22 @@ const AppContent = () => {
         
         {/* Content - shown for work subpages */}
         <ContentWrapper showContent={showContent}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/work" element={<Work />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/experiments" element={<Experiments />} />
-            <Route path="/work/solo-performances" element={<SoloPerformances />} />
-            <Route path="/work/group-performances" element={<GroupPerformances />} />
-            <Route path="/work/film-practices" element={<FilmPractices />} />
-            <Route path="/experiments/german-art-schools" element={<GermanArtSchools />} />
-            <Route path="/experiments/three-d-portfolio" element={<ThreeDPortfolio />} />
-            <Route path="/experiments/semantic-biome" element={<SemanticBiome />} />
-            <Route path="/experiments/philosophical-toys" element={<PhilosophicalToys />} />
-          </Routes>
+          <Suspense fallback={<LoadingState />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/experiments" element={<Experiments />} />
+              <Route path="/work/solo-performances" element={<SoloPerformances />} />
+              <Route path="/work/group-performances" element={<GroupPerformances />} />
+              <Route path="/work/film-practices" element={<FilmPractices />} />
+              <Route path="/experiments/german-art-schools" element={<GermanArtSchools />} />
+              <Route path="/experiments/three-d-portfolio" element={<ThreeDPortfolio />} />
+              <Route path="/experiments/semantic-biome" element={<SemanticBiome />} />
+              <Route path="/experiments/philosophical-toys" element={<PhilosophicalToys />} />
+            </Routes>
+          </Suspense>
         </ContentWrapper>
         {/* Removed BrutalistNavigation */}
       </AppContainer>
@@ -114,11 +134,13 @@ const AppContent = () => {
 
 function App() {
   return (
-    <Router>
-      <DarkModeProvider>
-        <AppContent />
-      </DarkModeProvider>
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <DarkModeProvider>
+          <AppContent />
+        </DarkModeProvider>
+      </Router>
+    </ErrorBoundary>
   );
 }
 
