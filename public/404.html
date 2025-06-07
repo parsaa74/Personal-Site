@@ -2,32 +2,21 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Redirecting...</title>
+  <title>Parsa Azari</title>
   <script type="text/javascript">
     // Single Page Apps for GitHub Pages
     // MIT License
-    var pathSegments = window.location.pathname.split('/');
-    var repoName = 'Personal-Site'; // Your repository name
-    var isRepoPage = pathSegments[1] === repoName;
-    var segment = isRepoPage ? pathSegments.slice(2).join('/') : pathSegments.slice(1).join('/');
-    
-    // For GitHub Pages, always redirect to the root with hash
-    var redirectUrl = window.location.origin;
-    
-    // Add repo name if needed
-    if (isRepoPage) {
-      redirectUrl += '/' + repoName;
-    }
-    
-    // Add hash route if there's a path segment
-    if (segment) {
-      redirectUrl += '/#/' + segment;
-    } else {
-      redirectUrl += '/';
-    }
-    
-    // Redirect immediately
-    window.location.replace(redirectUrl);
+    // https://github.com/rafgraph/spa-github-pages
+    var pathSegmentsToKeep = 1;
+
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
   </script>
 </head>
 <body>
