@@ -13,6 +13,18 @@ const PageContainer = styled.div`
   font-family: 'Moderat';
   position: relative;
   z-index: 15;
+  width: 100%;
+  overflow-x: hidden;
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+  }
 `;
 
 const BackButton = styled.button`
@@ -32,10 +44,36 @@ const BackButton = styled.button`
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
   z-index: 300;
+  -webkit-tap-highlight-color: transparent;
+  
+  @media (max-width: 768px) {
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  
+  @media (max-width: 480px) {
+    top: 15px;
+    left: 15px;
+    width: 36px;
+    height: 36px;
+  }
   
   &:hover {
     background: rgba(0, 0, 0, 0.5);
     transform: scale(1.05);
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:hover {
+      background: rgba(0, 0, 0, 0.3);
+      transform: none;
+    }
+    &:active {
+      background: rgba(0, 0, 0, 0.6);
+      transform: scale(0.95);
+    }
   }
   
   ${props => props.isLight && `
@@ -46,6 +84,15 @@ const BackButton = styled.button`
     &:hover {
       background: rgba(255, 255, 255, 0.5);
     }
+    
+    @media (hover: none) and (pointer: coarse) {
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      &:active {
+        background: rgba(255, 255, 255, 0.6);
+      }
+    }
   `}
 `;
 
@@ -53,6 +100,15 @@ const ContentWrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 80px;
+  
+  @media (max-width: 768px) {
+    padding-top: 60px;
+    max-width: 100%;
+  }
+  
+  @media (max-width: 480px) {
+    padding-top: 50px;
+  }
 `;
 
 const PageTitle = styled.h1`
@@ -61,6 +117,18 @@ const PageTitle = styled.h1`
   letter-spacing: 1px;
   font-weight: 300;
   text-shadow: ${props => props.isLight ? 'none' : '0 0 10px rgba(255,255,255,0.08)'};
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.5px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.3px;
+  }
 `;
 
 const WorkSection = styled.section`

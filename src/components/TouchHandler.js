@@ -1,44 +1,75 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
 
-const TouchHandler = ({ children }) => {
-  const navigate = useNavigate();
-  let touchStartX = 0;
-  let touchEndX = 0;
+const TouchHandler = ({ onTouch, children, className }) => {
+  const elementRef = useRef(null);
+  const touchStartRef = useRef(null);
+  const touchTimeRef = useRef(null);
 
   useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
     const handleTouchStart = (e) => {
-      touchStartX = e.touches[0].clientX;
+      touchStartRef.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
+      touchTimeRef.current = Date.now();
     };
 
     const handleTouchEnd = (e) => {
-      touchEndX = e.changedTouches[0].clientX;
-      handleSwipe();
+      if (!touchStartRef.current || !touchTimeRef.current) return;
+
+      const touchEnd = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY,
+      };
+
+      const touchDuration = Date.now() - touchTimeRef.current;
+      const touchDistance = Math.sqrt(
+        Math.pow(touchEnd.x - touchStartRef.current.x, 2) +
+        Math.pow(touchEnd.y - touchStartRef.current.y, 2)
+      );
+
+      // Consider it a tap if it's quick and doesn't move much
+      if (touchDuration < 300 && touchDistance < 10) {
+        if (onTouch) {
+          onTouch({
+            x: touchEnd.x,
+            y: touchEnd.y,
+            originalEvent: e,
+          });
+        }
+      }
+
+      touchStartRef.current = null;
+      touchTimeRef.current = null;
     };
 
-    const handleSwipe = () => {
-      const swipeDistance = touchEndX - touchStartX;
-      const minSwipeDistance = 50;
-
-      if (Math.abs(swipeDistance) > minSwipeDistance) {
-        if (swipeDistance > 0) {
-          navigate(-1); // Go back
-        } else {
-          navigate(1); // Go forward
-        }
+    const handleTouchMove = (e) => {
+      // Prevent scrolling when touching the interactive area
+      if (e.touches.length === 1) {
+        e.preventDefault();
       }
     };
 
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchend', handleTouchEnd);
+    // Add passive: false to allow preventDefault
+    element.addEventListener('touchstart', handleTouchStart, { passive: true });
+    element.addEventListener('touchend', handleTouchEnd, { passive: true });
+    element.addEventListener('touchmove', handleTouchMove, { passive: false });
 
     return () => {
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchend', handleTouchEnd);
+      element.removeEventListener('touchstart', handleTouchStart);
+      element.removeEventListener('touchend', handleTouchEnd);
+      element.removeEventListener('touchmove', handleTouchMove);
     };
-  }, [navigate]);
+  }, [onTouch]);
 
-  return <>{children}</>;
+  return (
+    <div ref={elementRef} className={className} style={{ touchAction: 'none' }}>
+      {children}
+    </div>
+  );
 };
 
 export default TouchHandler; 

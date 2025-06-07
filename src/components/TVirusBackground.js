@@ -129,6 +129,22 @@ const FloatingAboutBox = styled.div`
     : 'rgba(255,255,255,0.1)'};
   backdrop-filter: blur(20px);
   
+  @media (max-width: 768px) {
+    width: clamp(280px, 80vw, 350px);
+    font-size: 0.9rem;
+    padding: 1rem 1.2rem;
+    border-radius: 15px;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 480px) {
+    width: clamp(260px, 90vw, 320px);
+    font-size: 0.85rem;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    line-height: 1.5;
+  }
+  
   &::before {
     content: '';
     position: absolute;
@@ -143,6 +159,14 @@ const FloatingAboutBox = styled.div`
         : 'rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.4) 80%'}, 
       transparent 100%);
     border-radius: 18px 18px 0 0;
+    
+    @media (max-width: 768px) {
+      border-radius: 15px 15px 0 0;
+    }
+    
+    @media (max-width: 480px) {
+      border-radius: 12px 12px 0 0;
+    }
   }
   
   &:hover {
@@ -150,6 +174,12 @@ const FloatingAboutBox = styled.div`
     box-shadow: ${props => props.isLight
       ? '0 12px 48px rgba(0,0,0,0.2), 0 0 2px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.95)'
       : '0 12px 48px rgba(0,0,0,0.5), 0 0 2px rgba(255,255,255,0.3), inset 0 1px 0 rgba(255,255,255,0.15)'};
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:hover {
+      animation: none;
+    }
   }
 `;
 
@@ -164,6 +194,18 @@ const FloatingAboutTitle = styled.h2`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.6px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.4px;
+  }
 `;
 
 // --- Creative, Sequential GlitchText ---
@@ -2095,6 +2137,9 @@ const TVirusBackground = forwardRef((props, ref) => {
 
   // Update theme-dependent styles for floating boxes
   const getFloatingBoxStyle = () => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const isSmallMobile = typeof window !== 'undefined' && window.innerWidth <= 480;
+    
     return {
       background: isLightTheme ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.88)',
       color: isLightTheme ? 'black' : 'white',
@@ -2103,6 +2148,10 @@ const TVirusBackground = forwardRef((props, ref) => {
         ? '0 8px 32px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9)' 
         : '0 8px 32px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1)',
       backdropFilter: 'blur(20px)',
+      fontSize: isSmallMobile ? '0.85rem' : isMobile ? '0.9rem' : '0.8rem',
+      padding: isSmallMobile ? '0.8rem 1rem' : isMobile ? '1rem 1.2rem' : '1.2rem 1.5rem',
+      borderRadius: isSmallMobile ? '12px' : isMobile ? '15px' : '18px',
+      maxWidth: isMobile ? '90vw' : 'auto',
     };
   };
 
@@ -2189,8 +2238,9 @@ const TVirusBackground = forwardRef((props, ref) => {
           isLight={isLightTheme}
           style={{
             position: 'fixed',
-            left: 60,
-            top: 80,
+            left: typeof window !== 'undefined' && window.innerWidth <= 768 ? '5vw' : 60,
+            top: typeof window !== 'undefined' && window.innerWidth <= 768 ? '15vh' : 80,
+            right: typeof window !== 'undefined' && window.innerWidth <= 768 ? '5vw' : 'auto',
             zIndex: 200,
             ...getFloatingBoxStyle()
           }}
@@ -2256,10 +2306,11 @@ const TVirusBackground = forwardRef((props, ref) => {
         <FloatingAboutBox
           style={{
             position: 'fixed',
-            right: 60, // Moved to upper right
-            top: 80,
+            right: typeof window !== 'undefined' && window.innerWidth <= 768 ? '5vw' : 60,
+            top: typeof window !== 'undefined' && window.innerWidth <= 768 ? '15vh' : 80,
+            left: typeof window !== 'undefined' && window.innerWidth <= 768 ? '5vw' : 'auto',
             zIndex: 200,
-            width: '320px', // Reduced from 480px to 320px
+            width: typeof window !== 'undefined' && window.innerWidth <= 768 ? 'auto' : '320px',
             maxHeight: 'auto', // Let it size naturally
             overflowY: 'visible',
             ...getFloatingBoxStyle()
