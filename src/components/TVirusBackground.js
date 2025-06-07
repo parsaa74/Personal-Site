@@ -2308,22 +2308,7 @@ const TVirusBackground = forwardRef((props, ref) => {
         </FloatingAboutBox>
       )}
       
-      {/* Loading indicator for debugging */}
-      {!isInitialized && (
-        <div style={{
-          position: 'fixed',
-          bottom: 10,
-          right: 10,
-          background: isLightTheme ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)',
-          color: isLightTheme ? '#000' : '#fff',
-          padding: '5px 10px',
-          borderRadius: '5px',
-          fontSize: '12px',
-          zIndex: 9999
-        }}>
-          Loading TVirusBackground...
-        </div>
-      )}
+
     </div>
   );
 });
