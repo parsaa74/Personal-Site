@@ -197,19 +197,21 @@ const FilmPractices = () => {
     {
       title: "38:01",
       type: "Short Film",
-      role: "Actor",
+      role: "Leading Actor",
       year: "2017",
-      description: "A temporal experiment in narrative structure, '38:01' explores the perception of time within confined spaces. As an actor in this piece, the performance required sustained attention to micro-gestures and the weight of silence. The film investigates how duration affects emotional intensity and the viewer's relationship to character development within a compressed timeframe.",
+      director: "Salar Sharifi",
+      description: "38:01 (in which I play the leading role) is a short film about a young man who's suffering from a weird condition where he can't bare any sound, so he chooses to live a recluse life. he works in his father's store after his passing and spends his time repairing watches in his store until one day he meets a mute man with whom he falls in love. this student film was an experiment with sound and visuals and barely had any dialogue. films relied on minimal performances and had various references to artworks of modernist painting period. young cast and crew of the films were met with critical acclaim at Tassvir -e Sal Film Festival and Nahal International Short Film Festival which in the former, the short film won the best picture and and myself won the Honorable Mention Award.",
+      video: "https://player.vimeo.com/video/1089278485?h=53b0648d78",
       images: [
         {
-          src: "/images/film/38:01/film.jpg",
+          src: `${process.env.PUBLIC_URL}/images/film/38:01/film.jpg`,
           alt: "38:01 Film Still",
           title: "Film Still",
           description: "A moment of temporal suspension",
           height: "400px"
         },
         {
-          src: "/images/film/38:01/poster1.jpg",
+          src: `${process.env.PUBLIC_URL}/images/film/38:01/poster1.jpg`,
           alt: "38:01 Poster",
           title: "Film Poster",
           description: "Visual identity exploring time and space",
@@ -219,35 +221,36 @@ const FilmPractices = () => {
     },
     {
       title: "The One Who Dances on Your Grave",
-      type: "Feature Film",
+      type: "Short Film",
       role: "Cinematographer",
-      year: "2019",
-      description: "A haunting meditation on memory and loss, this film required developing a visual language that could convey both presence and absence. As cinematographer, the challenge was creating images that felt simultaneously intimate and distant, using light and shadow to suggest the liminal space between life and death. The cinematography employs long takes and careful framing to create contemplative viewing experience.",
+      year: "2018",
+      director: "Fatemeh Malekzadeh",
+      description: "The One Who Dances on Your Grave is an Short Film from Fatemeh Malekzadeh and I served as the Cinematographer.",
       video: "https://www.youtube.com/embed/PuEuzuM9Mig?si=9YIaq2UEtk0fxqKR",
       images: [
         {
-          src: "/images/film/The One Who Dances on Your Grave/poster2(1).jpg",
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(1).jpg`,
           alt: "The One Who Dances on Your Grave - Poster 1",
           title: "Film Poster - Version 1",
           description: "Exploring themes of memory and presence",
           height: "450px"
         },
         {
-          src: "/images/film/The One Who Dances on Your Grave/poster2(2).jpg",
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(2).jpg`,
           alt: "The One Who Dances on Your Grave - Poster 2",
           title: "Film Poster - Version 2",
           description: "Visual meditation on loss and remembrance",
           height: "450px"
         },
         {
-          src: "/images/film/The One Who Dances on Your Grave/poster2(3).jpg",
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(3).jpg`,
           alt: "The One Who Dances on Your Grave - Poster 3",
           title: "Film Poster - Version 3",
           description: "Light and shadow in liminal spaces",
           height: "450px"
         },
         {
-          src: "/images/film/The One Who Dances on Your Grave/poster2(4).jpg",
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(4).jpg`,
           alt: "The One Who Dances on Your Grave - Poster 4",
           title: "Film Poster - Version 4",
           description: "The dance between life and death",
@@ -274,7 +277,7 @@ const FilmPractices = () => {
           <WorkSection key={index} isLight={isLight}>
             <WorkHeader>
               <WorkTitle isLight={isLight}>{work.title}</WorkTitle>
-              <WorkMeta>{work.type} • {work.role} • {work.year}</WorkMeta>
+              <WorkMeta>{work.type} • {work.role} • {work.year}{work.director && ` • Directed by ${work.director}`}</WorkMeta>
               <WorkDescription>{work.description}</WorkDescription>
             </WorkHeader>
             

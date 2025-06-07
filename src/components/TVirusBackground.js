@@ -108,7 +108,7 @@ const AboutParagraph = styled.p`
 
 const FloatingAboutBox = styled.div`
   position: fixed;
-  width: clamp(160px, 28vw, 320px);
+  width: clamp(160px, 28vw, 350px);
   background: ${props => props.isLight 
     ? 'rgba(255,255,255,0.95)' 
     : 'rgba(0,0,0,0.88)'};
@@ -231,9 +231,9 @@ const ExperimentsContainer = styled.div`
   position: relative;
   z-index: 2;
   color: ${props => props.isLight ? '#000' : '#fff'};
-  padding: 1.2rem 1.5rem 1.8rem 1.5rem;
-  min-width: 220px;
-  max-width: 280px;
+  padding: 1rem 1.2rem 1rem 1.2rem;
+  min-width: 280px;
+  max-width: 320px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -241,9 +241,15 @@ const ExperimentsContainer = styled.div`
   justify-content: center;
   font-family: 'Moderat';
   
+  @media (max-width: 480px) {
+    min-width: 260px;
+    max-width: 280px;
+    padding: 0.8rem 1rem 0.8rem 1rem;
+  }
+  
   h2 {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
     font-weight: 500;
     letter-spacing: 0.8px;
     background: linear-gradient(135deg, 
@@ -260,16 +266,15 @@ const ExperimentsContainer = styled.div`
 const ExperimentGrid = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-left: -20px;
-  gap: 0.8rem;
+  align-items: center;
+  gap: 0.6rem;
   width: 100%;
   font-family: 'Moderat';
 `;
 
 const ExperimentItem = styled.div`
   background: rgba(255, 255, 255, 0.06);
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 0.8rem;
   border-radius: 15px;
   backdrop-filter: blur(15px);
   cursor: pointer;
@@ -279,8 +284,13 @@ const ExperimentItem = styled.div`
   position: relative;
   overflow: hidden;
   text-align: center;
-  width: 200px !important;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 240px;
+  
+  @media (max-width: 480px) {
+    max-width: 220px;
+    padding: 0.5rem 0.7rem;
+  }
   
   &::before {
     content: '';
@@ -315,7 +325,7 @@ const ExperimentItem = styled.div`
   }
   
   h3 {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.4rem;
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.5px;
@@ -323,7 +333,7 @@ const ExperimentItem = styled.div`
   }
   
   p {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.4rem;
     line-height: 1.5;
     font-size: 0.75rem;
     transition: color 0.3s ease;
@@ -530,7 +540,7 @@ const WorkContainer = styled.div`
   min-width: 280px;
   max-width: 360px;
   width: 100%;
-  padding: 1.2rem 1.5rem 1.6rem 1.5rem;
+  padding: 1rem 1.2rem 1rem 1.2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -538,7 +548,7 @@ const WorkContainer = styled.div`
   
   h2 {
     font-size: 1rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
     font-weight: 500;
     letter-spacing: 0.6px;
     background: linear-gradient(135deg, 
@@ -554,14 +564,14 @@ const WorkContainer = styled.div`
 const WorkGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.8rem;
+  gap: 0.6rem;
   width: 100%;
   font-family: 'Moderat';
 `;
 
 const WorkItem = styled.div`
   background: rgba(255, 255, 255, 0.06);
-  padding: 1rem 1.2rem;
+  padding: 0.8rem 1rem;
   border-radius: 12px;
   backdrop-filter: blur(15px);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -604,7 +614,7 @@ const WorkItem = styled.div`
   }
   
   h3 {
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
     font-family: 'Moderat';
     font-size: 0.85rem;
     font-weight: 500;
@@ -613,7 +623,7 @@ const WorkItem = styled.div`
   }
   
   p {
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
     font-family: 'Moderat';
     line-height: 1.4;
     font-size: 0.7rem;
@@ -837,13 +847,19 @@ const TVirusBackground = forwardRef((props, ref) => {
       title: "Semantic Biome",
       description: "Three-dimensional typographic ecosystem with autonomous entities",
       tech: "WebGL, 3D Canvas",
-      url: "https://parsaa74.github.io/Semantic-Biome/index-3d.html"
+      url: "https://parsaa74.github.io/Semantic-Biome/"
+    },
+    {
+      title: "Philosophical Toys",
+      description: "Digital recreation of 19th century pre-cinema motion experiments",
+      tech: "WebGL, Three.js, P5.js",
+      url: "https://parsaa74.github.io/Philosophical-Toys/"
     },
     {
       title: "3D Portfolio",
       description: "Interactive three-dimensional portfolio showcase with immersive navigation",
       tech: "Three.js, WebGL",
-      url: "#"
+      url: "https://parsaa74.github.io/3D-Portfolio/"
     },
     // Add more experiments as needed
   ];
@@ -2189,8 +2205,10 @@ const TVirusBackground = forwardRef((props, ref) => {
           isLight={isLightTheme}
           style={{
             position: 'fixed',
-            left: 60,
+            left: 'clamp(20px, 4vw, 60px)',
             top: 80,
+            right: 'clamp(20px, 4vw, 60px)',
+            maxWidth: '350px',
             zIndex: 200,
             ...getFloatingBoxStyle()
           }}
@@ -2209,6 +2227,8 @@ const TVirusBackground = forwardRef((props, ref) => {
                       route += 'german-art-schools';
                     } else if (experiment.title === 'Semantic Biome') {
                       route += 'semantic-biome';
+                    } else if (experiment.title === 'Philosophical Toys') {
+                      route += 'philosophical-toys';
                     } else if (experiment.title === '3D Portfolio') {
                       route += 'three-d-portfolio';
                     }
@@ -2274,7 +2294,7 @@ const TVirusBackground = forwardRef((props, ref) => {
         <FloatingAboutBox
           style={{
             position: 'fixed',
-            left: 60,
+            right: 60,
             top: 80,
             zIndex: 200,
             ...getFloatingBoxStyle()

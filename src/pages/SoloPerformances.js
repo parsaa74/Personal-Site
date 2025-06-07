@@ -182,50 +182,50 @@ const SoloPerformances = () => {
 
   const works = [
     {
-      title: "Friends",
+      title: "InstaMeet (Friend)",
       medium: "Performance Art",
-      year: "2016-2017",
+      year: "2016",
       location: "Tehran Museum of Contemporary Art (TMoCA)",
-      event: "Festival of 30 Performances 30 Artists 30 Days",
-      description: "An intimate exploration of friendship dynamics through live performance. This piece examines the boundaries between personal and public personas, questioning the authenticity of relationships in contemporary society. The performance involves interactive elements where the audience becomes part of the narrative structure.",
+      event: "6th Annual 30 Performances 30 Artists 30 Days Festival",
+      description: "InstaMeet/Friend, was a multi-media effort which was attempting to capture a real life virtualization of networking effects of social media on the nature of communication. this was done through a gamification of the relationship between the performer and the audience throughout the performance. each person would be given an ID card (containing their real life username on Instagram) and a mask to which they would wear in the gallery. the audience interacted with the performer via his instagram account which was livestreamed in the gallery for everyone to see where performer did posted various videos and photos of the event, replied to comments, took pictures of audience and himself and so on. performer handpicked and brought them out to a deserted corner of the gallery, and before taking their pictures, he unmasked the subjects to reveal their irl IDs in the photos with their username tagged. this sort of doxxing (a rather newer term that's more widely used these days) generated a reactionary affect in the audience and did encouraged them to interact more and more in the aforementioned website all awhile experiencing all this in the hollowed out space of gallery. this performance was part of the 5th annual festival of \"30 performances 30 artists 30 days\" in the Tehran Museum of Contemporary Arts, Curated by Amir Rad. Performer did a reperformance based on InstaMeet in the Radical Performance festival a year later in 2017.",
       images: [
         {
-          src: "/images/performance/solo performances/friends/photo_2025-05-01_17-29-01.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/friends/photo_2025-05-01_17-29-01.jpg`,
           alt: "Friends Performance - Documentation 1",
           title: "Performance Documentation",
           description: "Exploring friendship dynamics in public space",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/friends/M2RjNjJmMjZk.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/friends/M2RjNjJmMjZk.jpg`,
           alt: "Friends Performance - Documentation 2",
           title: "Interactive Elements",
           description: "Audience becomes part of the narrative",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/friends/NzIwYjJkZmQ1.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/friends/NzIwYjJkZmQ1.jpg`,
           alt: "Friends Performance - Documentation 3",
           title: "Personal vs Public Personas",
           description: "Boundaries between authentic relationships",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/friends/ZTBjZDc1NzQ4.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/friends/ZTBjZDc1NzQ4.jpg`,
           alt: "Friends Performance - Documentation 4",
           title: "Social Dynamics",
           description: "Questioning authenticity in contemporary society",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/friends/ZTgyOGRjYjRj.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/friends/ZTgyOGRjYjRj.jpg`,
           alt: "Friends Performance - Documentation 5",
           title: "Intimate Exploration",
           description: "Live performance investigating relationships",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/friends/MGE1ZjJiODcw.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/friends/MGE1ZjJiODcw.jpg`,
           alt: "Friends Performance - Documentation 6",
           title: "Performance Context",
           description: "Contemporary social interaction",
@@ -236,48 +236,48 @@ const SoloPerformances = () => {
     {
       title: "Dissolve",
       medium: "Performance Art, Video Art",
-      year: "2018",
+      year: "2016",
       location: "Tehran Museum of Contemporary Art (TMoCA)",
-      event: "Festival of 30 Performances 30 Artists 30 Days",
+      event: "6th Annual 30 Performances 30 Artists 30 Days Festival",
       description: "Dissolve, was initially conceived as a meditation on the ephemeral nature of the modern day lives and and an exploration of the challenging effects that the accelerated speed of our lives have had on the familial and on a bigger scale, societal roles that we've been burdened with. the Performance art piece that was accompanied by a video which portrayed the Performer in a rather performative situations, doing transient and mundane chores of everyday life; entering rooms, exiting them, going to sleep and waking from it. these short clips gets repeatedly dissolved into another, just as the different places and tasks get dissolve into one another in an absolute displacement; meanwhile the performer who was placed in the middle of gallery and with canvas behind him, had obtained the figure of a painter, who instead of brushing the canvas with paint was looking through multiple volumes of Persian dictionaries for words, hand picking a few and writing them on the canvas. the words were picked randomly in a dadaian fashion but maintained a coherent sense over (fabricated or not) definitions of roles and groundings of humans within societal norms and traditions within familial bonds. he gradually tried to interact with the audience in the room to give them the opportunity to rethink words, pick and write them. eventually the canvas got filled with words and their definitions that made it utterly unreadable and totally black.This performance piece was part of 6th Annual \"30 Performances, 30 Artists, 30 Days Festival\" which was annually held at Tehran Museum of Contemporary Art.",
       images: [
         {
-          src: "/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3.jpg`,
           alt: "Dissolve Performance - Main Documentation",
           title: "Performance Documentation",
           description: "Identity dissolution in digital spaces",
           height: "450px"
         },
         {
-          src: "/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (1).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (1).jpg`,
           alt: "Dissolve Performance - Sequence 1",
           title: "Performance Sequence 1",
           description: "Exploring physical and virtual realities",
           height: "450px"
         },
         {
-          src: "/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (2).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (2).jpg`,
           alt: "Dissolve Performance - Sequence 2",
           title: "Performance Sequence 2",
           description: "Fragmentation of self in networked environments",
           height: "450px"
         },
         {
-          src: "/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (3).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (3).jpg`,
           alt: "Dissolve Performance - Sequence 3",
           title: "Performance Sequence 3",
           description: "Liminal space between presence and absence",
           height: "450px"
         },
         {
-          src: "/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (4).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (4).jpg`,
           alt: "Dissolve Performance - Sequence 4",
           title: "Performance Sequence 4",
           description: "Multimedia exploration of identity",
           height: "450px"
         },
         {
-          src: "/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (5).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/dissolve/سی پرفورمنس ،سی هنرمند، سی روز 3 (5).jpg`,
           alt: "Dissolve Performance - Sequence 5",
           title: "Performance Sequence 5",
           description: "Video projection and live action merge",
@@ -290,46 +290,46 @@ const SoloPerformances = () => {
       medium: "Performance Art, Video Art",
       year: "2018",
       location: "Tehran Museum of Contemporary Art (TMoCA)",
-      event: "Festival of 30 Performances 30 Artists 30 Days",
+      event: "7th Annual 30 Performances 30 Artists 30 Days Festival",
       description: "Circle of Confusion, was a collaborative video-performance between Parsa Azari and Parsa Samadpour which came out of an idea a sense of discomfort that we go through both in terms of our identity forming and our bodily as we grow. this led to a video which was testament to our physical boundaries as two performers inside a studio and this video was projected in a rather vulnerable but transparent space to try to convey a shameful secret to the audience by showing it publicly. the video was of us both practicing rope jumping as much as we could. both were restricted by different types of barriers throughout the shoot and this clips of us trying and retrying was dissolved into one other to create an impossible image. audience was tested by the performers and went through trial to be able to move the secret part of the gallery. this performance was part of the 7th annual 30 Performances 30 Artists 30 Days Festival which were held in TMoCA (Tehran Museum of Contemporary Arts), curated by Amir Rad",
       images: [
         {
-          src: "/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22.jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22.jpg`,
           alt: "Circle of Confusion - Main Documentation",
           title: "Performance Documentation",
           description: "Exploring perception and misrecognition",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (2).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (2).jpg`,
           alt: "Circle of Confusion - Circular Movements",
           title: "Circular Movements",
           description: "Disorienting visual experiences with light",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (3).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (3).jpg`,
           alt: "Circle of Confusion - Light and Video",
           title: "Light and Video Integration",
           description: "Challenging understanding of clarity and focus",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (4).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (4).jpg`,
           alt: "Circle of Confusion - Conceptual Navigation",
           title: "Navigating Uncertainty",
           description: "Visual and conceptual realms intertwine",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (5).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (5).jpg`,
           alt: "Circle of Confusion - Optical References",
           title: "Optical References",
           description: "Drawing from photographic terminology",
           height: "400px"
         },
         {
-          src: "/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (6).jpg",
+          src: `${process.env.PUBLIC_URL}/images/performance/solo performances/circle of confusion/photo_2025-05-01_17-25-22 (6).jpg`,
           alt: "Circle of Confusion - Performance Context",
           title: "Performance Environment",
           description: "Creating disorienting experiences",
