@@ -14,6 +14,8 @@ import GroupPerformances from './pages/GroupPerformances';
 import FilmPractices from './pages/FilmPractices';
 import GermanArtSchools from './pages/GermanArtSchools';
 import ThreeDPortfolio from './pages/ThreeDPortfolio';
+import SemanticBiome from './pages/SemanticBiome';
+import PhilosophicalToys from './pages/PhilosophicalToys';
 import styled from 'styled-components';
 
 // Create a context to share state between components
@@ -100,6 +102,8 @@ const AppContent = () => {
             <Route path="/work/film-practices" element={<FilmPractices />} />
             <Route path="/experiments/german-art-schools" element={<GermanArtSchools />} />
             <Route path="/experiments/three-d-portfolio" element={<ThreeDPortfolio />} />
+            <Route path="/experiments/semantic-biome" element={<SemanticBiome />} />
+            <Route path="/experiments/philosophical-toys" element={<PhilosophicalToys />} />
           </Routes>
         </ContentWrapper>
         {/* Removed BrutalistNavigation */}

@@ -172,109 +172,87 @@ const LaunchButton = styled.a`
   transition: all 0.3s ease;
   border: 1px solid ${props => props.isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.2)'};
   margin-top: 1rem;
-  cursor: pointer;
   
   &:hover {
     background: ${props => props.isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)'};
     transform: translateY(-2px);
     box-shadow: ${props => props.isLight 
-      ? '0 8px 20px rgba(0,0,0,0.1)'
-      : '0 8px 20px rgba(255,255,255,0.08)'};
+      ? '0 5px 15px rgba(0,0,0,0.1)'
+      : '0 5px 15px rgba(0,0,0,0.3)'};
   }
 `;
 
-const StatusNote = styled.div`
-  background: ${props => props.isLight ? 'rgba(255, 193, 7, 0.1)' : 'rgba(255, 193, 7, 0.1)'};
-  border: 1px solid ${props => props.isLight ? 'rgba(255, 193, 7, 0.3)' : 'rgba(255, 193, 7, 0.3)'};
-  color: ${props => props.isLight ? '#856404' : '#fff3cd'};
-  padding: 1rem;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const ThreeDPortfolio = () => {
+const PhilosophicalToys = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useDarkMode();
   const isLight = !isDarkMode;
 
   const experimentData = {
-    title: "3D Portfolio",
-    tech: "Three.js, WebGL",
-    year: "2024",
-    url: "https://parsaa74.github.io/3D-Portfolio/",
-    description: "this experiment is aiming to create overview of my work in different areas. This project is a 3D web-based portfolio that tries to bend the the traditional portfolio experience into an immersive, explorable environment. Drawing inspiration from my background in performance art and cinema, the work creates a spatial narrative where visitors can physically navigate through different rooms representing distinct aspects of my practice: performance art, film/cinema, interaction design, and development work.",
-    extendedDescription: "The project emerges from a desire to break away from flat, scrollable portfolios and instead create an experience that mirrors how we encounter art in physical space. Each room becomes a curated gallery, containing documentation of performances like «Circle of Confusion», «Dissolve» and «Friends» alongside development projects and design work. The corridor system is an attempt or perhaps a nod off towards my cinephilic dreams. I tried to attain a rather unorthodox method to represent my previous works and my ongoing love for learning and discovering newer forms, although not radically fresh but yet I tried to follow my instinct and try to manifest creativity on my own terms. Javascript, HTML, CSS, Three.js, GLSL",
+    title: "Philosophical Toys",
+    tech: "WebGL, Three.js, P5.js",
+    year: "2021",
+    url: "https://parsaa74.github.io/Philosophical-Toys/",
+    description: "as I was Preparing my masters thesis about the notion of stillness and motion at the turn of the century (Late 19th and Early 20th) I was intrigued to study a rather famous but under appreciated phenomenon called \"philosophical toys\". This interesting concept explains a set of 19th century inventions that were attempting to achieve motion in within still images.",
+    extendedDescription: "This is of course the era of precinema so therefore anything prior to cinema would wrongly interpreted as an attempt to achieve cinema and much of this invention would not be identified as worthy object that has value of their own without being assigned to an institutionalized medium such as cinema. Alongside my research I developed sketches using WebGL, three.js and p5.js library to achieve a perspective over early film technology and also being able to do a visual presentation while I defended my thesis. This web project tries to repackage those sketches in one hub and also works as a historic overview of the precinema development of moving images. a recreation of this fashion can be faulty and imprecise at points but I developed this project to be a starting point for the enthusiast of early film and photography but perhaps the nature of digitalized version of philosophical toys would be considered a misservice to the physical nature of film and its history. Next.js, react.jsm CSS, HTML, Javascript, three.js, WebGL",
     images: [
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/9.png`,
-        alt: "3D Portfolio Interface Concept",
-        title: "Three-Dimensional Navigation",
-        description: "Exploring portfolio content through immersive 3D spaces",
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/1.png`,
+        alt: "Philosophical Toys Interface",
+        title: "Pre-cinema Studies",
+        description: "Digital recreation of 19th century motion experiments",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/8.png`,
-        alt: "Spatial Portfolio Design",
-        title: "Spatial Storytelling",
-        description: "Projects existing within their own dimensional environments",
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/2.png`,
+        alt: "Motion Studies",
+        title: "Motion in Still Images",
+        description: "Exploring early animation principles",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/7.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/3.png`,
         alt: "WebGL Implementation",
-        title: "Technical Implementation",
-        description: "Three.js and WebGL powering immersive experiences",
+        title: "Interactive Demonstrations",
+        description: "WebGL visualizations of historical motion devices",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/6.png`,
-        alt: "3D Gallery Spaces",
-        title: "Virtual Gallery System",
-        description: "Immersive gallery spaces for different project categories",
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/4.png`,
+        alt: "Historical Recreation",
+        title: "Historical Analysis",
+        description: "Academic research through digital recreation",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/5.png`,
-        alt: "Performance Documentation Room",
-        title: "Performance Art Gallery",
-        description: "Dedicated space for performance art documentation",
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/5.png`,
+        alt: "Early Film Technology",
+        title: "Pre-cinema Technology",
+        description: "Understanding the roots of moving images",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/4.png`,
-        alt: "Cinema Corridor",
-        title: "Cinematic Navigation",
-        description: "Corridor system inspired by cinematic spatial design",
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/6.png`,
+        alt: "Thesis Research",
+        title: "Academic Research",
+        description: "Master's thesis on stillness and motion",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/3.png`,
-        alt: "Interactive Elements",
-        title: "User Interaction Design",
-        description: "Interactive elements and navigation mechanics",
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/7.png`,
+        alt: "Digital Recreation",
+        title: "Digital Interpretations",
+        description: "Modern digital recreation of historical devices",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/2.png`,
-        alt: "Technical Implementation",
-        title: "Three.js Development",
-        description: "Behind-the-scenes technical implementation details",
-        height: "350px"
-      },
-      {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/1.png`,
-        alt: "Overall Architecture",
-        title: "Project Architecture",
-        description: "Complete overview of the 3D portfolio structure",
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/8.png`,
+        alt: "Visual Presentation",
+        title: "Thesis Defense",
+        description: "Visual presentation for thesis defense",
         height: "350px"
       }
     ]
   };
-  
 
   return (
     <PageContainer isLight={isLight}>
@@ -307,7 +285,6 @@ const ThreeDPortfolio = () => {
               target="_blank"
               rel="noopener noreferrer"
               isLight={isLight}
-              title="Launch 3D Portfolio"
             >
               <ExternalLink size={16} />
               Launch Project
@@ -323,4 +300,4 @@ const ThreeDPortfolio = () => {
   );
 };
 
-export default ThreeDPortfolio; 
+export default PhilosophicalToys; 

@@ -4,7 +4,7 @@ export const projects = [
     title: "Interactive Art Installation",
     category: "creative",
     description: "An immersive installation using Three.js and motion sensors to create interactive 3D environments.",
-    image: "/images/projects/interactive-art.jpg",
+    image: `${process.env.PUBLIC_URL}/images/projects/interactive-art.jpg`,
     technologies: ["Three.js", "WebGL", "React", "Arduino"],
     liveUrl: "https://example.com/interactive-art",
     githubUrl: "https://github.com/username/interactive-art"
@@ -14,7 +14,7 @@ export const projects = [
     title: "Digital Experience Platform",
     category: "ux",
     description: "A comprehensive UX/UI design system for a digital experience platform.",
-    image: "/images/projects/ux-platform.jpg",
+    image: `${process.env.PUBLIC_URL}/images/projects/ux-platform.jpg`,
     technologies: ["Figma", "Protopie", "React", "Styled Components"],
     liveUrl: "https://example.com/ux-platform",
     githubUrl: "https://github.com/username/ux-platform"
