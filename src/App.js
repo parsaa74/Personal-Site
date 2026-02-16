@@ -25,6 +25,7 @@ const retryImport = (fn, retries = 3, delay = 1000) => {
 
 // Lazy load components for better performance with retry functionality
 const Home = lazy(() => retryImport(() => import('./pages/Home')));
+const Blog = lazy(() => retryImport(() => import('./pages/Blog')));
 const About = lazy(() => retryImport(() => import('./pages/About')));
 const Work = lazy(() => retryImport(() => import('./pages/Work')));
 const Contact = lazy(() => retryImport(() => import('./pages/Contact')));
@@ -88,9 +89,10 @@ const AppContent = () => {
   const isMainSection = ['/', '/work', '/about', '/contact', '/experiments'].includes(location.pathname);
   const isWorkSubpage = location.pathname.startsWith('/work/') && location.pathname !== '/work';
   const isExperimentSubpage = location.pathname.startsWith('/experiments/') && location.pathname !== '/experiments';
+  const isBlogPage = location.pathname === '/blog';
   
   const showBackground = isMainSection;
-  const showContent = isWorkSubpage || isExperimentSubpage;
+  const showContent = isWorkSubpage || isExperimentSubpage || isBlogPage;
 
   const handleNavigation = (sectionId) => {
     console.log("App: handleNavigation called for", sectionId);
@@ -99,8 +101,8 @@ const AppContent = () => {
     // Navigate to the appropriate route
     if (sectionId === 'work' || sectionId === 'about' || sectionId === 'contact' || sectionId === 'experiments') {
       navigate(`/${sectionId}`);
-    } else if (sectionId === 'home') {
-      navigate('/');
+    } else if (sectionId === 'blog') {
+      navigate('/blog');
     } else {
       navigate('/');
     }
@@ -122,6 +124,7 @@ const AppContent = () => {
           <Suspense fallback={<LoadingState />}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/blog" element={<Blog />} />
               <Route path="/work" element={<Work />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />

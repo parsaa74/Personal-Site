@@ -1,6 +1,6 @@
 // src/components/navSections.js
 export const navSections = [
-  { id: 'home', label: 'Home' },
+  { id: 'blog', label: 'Blog' },
   { id: 'work', label: 'Work' },
   { id: 'about', label: 'About' },
   { id: 'experiments', label: 'Experiments' },

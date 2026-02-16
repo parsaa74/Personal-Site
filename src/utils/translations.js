@@ -1,14 +1,15 @@
 export const translations = {
   en: {
     nav: {
+      blog: 'Blog',
       projects: 'Projects',
       about: 'About',
       contact: 'Contact'
     },
-    home: {
-      title: 'Creative Developer',
-      subtitle: 'Design / Motion / Performance',
-      cta: 'View Projects'
+    blog: {
+      title: 'Blog',
+      subtitle: 'Thoughts and writings',
+      cta: 'Read More'
     },
     projects: {
       title: 'Selected Works',
@@ -41,14 +42,15 @@ export const translations = {
   },
   de: {
     nav: {
+      blog: 'Blog',
       projects: 'Projekte',
       about: 'Über',
       contact: 'Kontakt'
     },
-    home: {
-      title: 'Kreativer Entwickler',
-      subtitle: 'Design / Animation / Performance',
-      cta: 'Projekte ansehen'
+    blog: {
+      title: 'Blog',
+      subtitle: 'Gedanken und Schriften',
+      cta: 'Mehr lesen'
     },
     projects: {
       title: 'Ausgewählte Arbeiten',

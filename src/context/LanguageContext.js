@@ -5,26 +5,26 @@ const LanguageContext = createContext();
 export const translations = {
   en: {
     nav: {
-      home: 'Home',
+      blog: 'Blog',
       about: 'About',
       projects: 'Projects',
       contact: 'Contact',
     },
-    home: {
-      title: 'Creative Developer',
-      subtitle: 'Building digital experiences',
+    blog: {
+      title: 'Blog',
+      subtitle: 'Thoughts and writings',
     },
   },
   de: {
     nav: {
-      home: 'Startseite',
+      blog: 'Blog',
       about: 'Über mich',
       projects: 'Projekte',
       contact: 'Kontakt',
     },
-    home: {
-      title: 'Kreativer Entwickler',
-      subtitle: 'Digitale Erlebnisse gestalten',
+    blog: {
+      title: 'Blog',
+      subtitle: 'Gedanken und Schriften',
     },
   },
 };
