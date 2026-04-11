@@ -32,6 +32,7 @@ yarn-error.log*
 
 # AI-related content (excluded for public repository)
 EXPERIMENT_PAGES_CHANGELOG.md
+MOBILE_OPTIMIZATION_SUMMARY.md
 
 # Large image assets (to reduce repository size)
 public/smoke-image/
