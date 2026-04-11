@@ -210,63 +210,63 @@ const ThreeDPortfolio = () => {
     extendedDescription: "The project emerges from a desire to break away from flat, scrollable portfolios and instead create an experience that mirrors how we encounter art in physical space. Each room becomes a curated gallery, containing documentation of performances like «Circle of Confusion», «Dissolve» and «Friends» alongside development projects and design work. The corridor system is an attempt or perhaps a nod off towards my cinephilic dreams. I tried to attain a rather unorthodox method to represent my previous works and my ongoing love for learning and discovering newer forms, although not radically fresh but yet I tried to follow my instinct and try to manifest creativity on my own terms. Javascript, HTML, CSS, Three.js, GLSL",
     images: [
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/9.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/9.webp`,
         alt: "3D Portfolio Interface Concept",
         title: "Three-Dimensional Navigation",
         description: "Exploring portfolio content through immersive 3D spaces",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/8.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/8.webp`,
         alt: "Spatial Portfolio Design",
         title: "Spatial Storytelling",
         description: "Projects existing within their own dimensional environments",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/7.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/7.webp`,
         alt: "WebGL Implementation",
         title: "Technical Implementation",
         description: "Three.js and WebGL powering immersive experiences",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/6.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/6.webp`,
         alt: "3D Gallery Spaces",
         title: "Virtual Gallery System",
         description: "Immersive gallery spaces for different project categories",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/5.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/5.webp`,
         alt: "Performance Documentation Room",
         title: "Performance Art Gallery",
         description: "Dedicated space for performance art documentation",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/4.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/4.webp`,
         alt: "Cinema Corridor",
         title: "Cinematic Navigation",
         description: "Corridor system inspired by cinematic spatial design",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/3.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/3.webp`,
         alt: "Interactive Elements",
         title: "User Interaction Design",
         description: "Interactive elements and navigation mechanics",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/2.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/2.webp`,
         alt: "Technical Implementation",
         title: "Three.js Development",
         description: "Behind-the-scenes technical implementation details",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/1.png`,
+        src: `${process.env.PUBLIC_URL}/images/3d-portfolio/1.webp`,
         alt: "Overall Architecture",
         title: "Project Architecture",
         description: "Complete overview of the 3D portfolio structure",

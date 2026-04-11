@@ -196,56 +196,56 @@ const PhilosophicalToys = () => {
     extendedDescription: "This is of course the era of precinema so therefore anything prior to cinema would wrongly interpreted as an attempt to achieve cinema and much of this invention would not be identified as worthy object that has value of their own without being assigned to an institutionalized medium such as cinema. Alongside my research I developed sketches using WebGL, three.js and p5.js library to achieve a perspective over early film technology and also being able to do a visual presentation while I defended my thesis. This web project tries to repackage those sketches in one hub and also works as a historic overview of the precinema development of moving images. a recreation of this fashion can be faulty and imprecise at points but I developed this project to be a starting point for the enthusiast of early film and photography but perhaps the nature of digitalized version of philosophical toys would be considered a misservice to the physical nature of film and its history. Next.js, react.jsm CSS, HTML, Javascript, three.js, WebGL",
     images: [
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/1.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/1.webp`,
         alt: "Philosophical Toys Interface",
         title: "Pre-cinema Studies",
         description: "Digital recreation of 19th century motion experiments",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/2.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/2.webp`,
         alt: "Motion Studies",
         title: "Motion in Still Images",
         description: "Exploring early animation principles",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/3.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/3.webp`,
         alt: "WebGL Implementation",
         title: "Interactive Demonstrations",
         description: "WebGL visualizations of historical motion devices",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/4.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/4.webp`,
         alt: "Historical Recreation",
         title: "Historical Analysis",
         description: "Academic research through digital recreation",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/5.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/5.webp`,
         alt: "Early Film Technology",
         title: "Pre-cinema Technology",
         description: "Understanding the roots of moving images",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/6.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/6.webp`,
         alt: "Thesis Research",
         title: "Academic Research",
         description: "Master's thesis on stillness and motion",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/7.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/7.webp`,
         alt: "Digital Recreation",
         title: "Digital Interpretations",
         description: "Modern digital recreation of historical devices",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/8.png`,
+        src: `${process.env.PUBLIC_URL}/images/philosophical-toys/8.webp`,
         alt: "Visual Presentation",
         title: "Thesis Defense",
         description: "Visual presentation for thesis defense",

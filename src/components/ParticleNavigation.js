@@ -12,7 +12,7 @@ const zones = [
   { position: [-2, -2, 2], label: 'nav.contact', path: '/contact' },
 ];
 
-const PARTICLE_COUNT = 1500; // Reduced for better performance
+const PARTICLE_COUNT = typeof navigator !== 'undefined' && navigator.hardwareConcurrency <= 4 ? 300 : 600;
 const HOVER_INTENSITY = 0.05;
 const BASE_PARTICLE_SIZE = 0.06;
 
@@ -32,6 +32,12 @@ function Particles() {
   const particlesRef = useRef();
   const mousePosition = useMemo(() => new THREE.Vector3(), []);
   const [activeZone, setActiveZone] = useState(null);
+  const frameCountRef = useRef(0);
+
+  const zonePositions = useMemo(
+    () => zones.map((zone) => new THREE.Vector3(...zone.position)),
+    []
+  );
 
   const particles = useMemo(() => {
     const temp = [];
@@ -60,6 +66,9 @@ function Particles() {
   useFrame((state) => {
     if (!particlesRef.current) return;
 
+    frameCountRef.current += 1;
+    if (frameCountRef.current % 2 !== 0) return;
+
     const time = state.clock.getElapsedTime();
     const positions = particlesRef.current.geometry.attributes.position.array;
     const sizes = particlesRef.current.geometry.attributes.size.array;
@@ -71,7 +80,7 @@ function Particles() {
 
       // Zone attraction
       if (activeZone !== null) {
-        const zonePos = new THREE.Vector3(...zones[activeZone].position);
+        const zonePos = zonePositions[activeZone];
         const distanceToZone = particle.position.distanceTo(zonePos);
         if (distanceToZone < 5) {
           const force = zonePos.clone().sub(particle.position);

@@ -196,28 +196,28 @@ const GermanArtSchools = () => {
     extendedDescription: "My attempt was to create a visual experience of the art schools that are active at the time of developing the project. This visualization was initially developed only in 3D (three.js) but evolved into a two dimensional project that tries to be both a 3D and flat D3 visualization. In each mode the user can interact with the nodes (schools) different and extract different information. The schools can be filtered through several factors: the State which they are located at, the programs that they offer, the semester that they are presented (winter and summer) and whether they are NC-Frei or not. In 3D mode, By selecting any of the schools, the nodes form pose that offer the user the relation that each node has with the other nodes. The proximity of nodes with one another in 3d mode, showcase the similarity between them. User can switch to D3 mode by selecting the icon on the lower left side of the screen. In D3 mode, user can see the connections lines more clearly. The connection lines are also based on the facts and factors which are present at the upper left side of the screen (filter panel). User can access the information for function of different keys on the keyboard and also access the source code for better understanding and hopefully, improving the faulty aspects of this project by pulling request or forking the project for themselves and building it differently. this Project is rather new and lacks a solid amount response from future applicants who would want study any design/art/media related programs. I Used a combination of react with javascript libraries, html, css and typescript to build this project. D3.js and three.js was used for the D3 visualization and 3D visualization.",
     images: [
       {
-        src: `${process.env.PUBLIC_URL}/images/german-art/4.png`,
+        src: `${process.env.PUBLIC_URL}/images/german-art/4.webp`,
         alt: "German Art Schools Interface",
         title: "Interactive Web Interface",
         description: "Exploring German art institutions through interactive design",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/german-art/3.png`,
+        src: `${process.env.PUBLIC_URL}/images/german-art/3.webp`,
         alt: "Educational Visualization",
         title: "Data Visualization",
         description: "Mapping connections between art schools and movements",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/german-art/2.png`,
+        src: `${process.env.PUBLIC_URL}/images/german-art/2.webp`,
         alt: "Art Academy Research",
         title: "Research Documentation",
         description: "Historical analysis of German art education systems",
         height: "350px"
       },
       {
-        src: `${process.env.PUBLIC_URL}/images/german-art/1.png`,
+        src: `${process.env.PUBLIC_URL}/images/german-art/1.webp`,
         alt: "3D Visualization Mode",
         title: "Three.js Implementation",
         description: "3D mode showing school relationships and proximity",

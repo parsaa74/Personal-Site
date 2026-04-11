@@ -204,14 +204,14 @@ const FilmPractices = () => {
       video: "https://player.vimeo.com/video/1089278485?h=53b0648d78",
       images: [
         {
-          src: `${process.env.PUBLIC_URL}/images/film/38:01/film.jpg`,
+          src: `${process.env.PUBLIC_URL}/images/film/38:01/film.webp`,
           alt: "38:01 Film Still",
           title: "Film Still",
           description: "A moment of temporal suspension",
           height: "400px"
         },
         {
-          src: `${process.env.PUBLIC_URL}/images/film/38:01/poster1.jpg`,
+          src: `${process.env.PUBLIC_URL}/images/film/38:01/poster1.webp`,
           alt: "38:01 Poster",
           title: "Film Poster",
           description: "Visual identity exploring time and space",
@@ -229,28 +229,28 @@ const FilmPractices = () => {
       video: "https://www.youtube.com/embed/PuEuzuM9Mig?si=9YIaq2UEtk0fxqKR",
       images: [
         {
-          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(1).jpg`,
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(1).webp`,
           alt: "The One Who Dances on Your Grave - Poster 1",
           title: "Film Poster - Version 1",
           description: "Exploring themes of memory and presence",
           height: "450px"
         },
         {
-          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(2).jpg`,
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(2).webp`,
           alt: "The One Who Dances on Your Grave - Poster 2",
           title: "Film Poster - Version 2",
           description: "Visual meditation on loss and remembrance",
           height: "450px"
         },
         {
-          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(3).jpg`,
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(3).webp`,
           alt: "The One Who Dances on Your Grave - Poster 3",
           title: "Film Poster - Version 3",
           description: "Light and shadow in liminal spaces",
           height: "450px"
         },
         {
-          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(4).jpg`,
+          src: `${process.env.PUBLIC_URL}/images/film/The One Who Dances on Your Grave/poster2(4).webp`,
           alt: "The One Who Dances on Your Grave - Poster 4",
           title: "Film Poster - Version 4",
           description: "The dance between life and death",
