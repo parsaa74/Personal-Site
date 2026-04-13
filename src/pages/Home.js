@@ -226,7 +226,7 @@ const Home = () => {
       default:
         return {
           title: "Parsa Azari",
-          subtitle: "Navigate through the organic branches to explore different sections. Each branch leads to a different aspect of practice in cinema, performance, and digital media.",
+          subtitle: "Creative Developer",
           showContent: false // Main home doesn't show content box, just integrates with background
         };
     }
