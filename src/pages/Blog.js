@@ -308,6 +308,70 @@ const portableTextComponents = {
   },
 };
 
+const fallbackBlogPosts = [
+  {
+    _id: 'debut',
+    title: 'debut',
+    date: '2026-02-16',
+    excerpt: "well I thought the website needs a blog section and even though I don't yet know what to do with it, but I think you might enjoy the poem below by rob halpern's book *Common Place:*",
+    category: 'Note',
+    poemAttribution: 'from Common Place by Rob Halpern',
+    poem: `FALSE COMMUNIQUÉ
+
+And so I sing this body on a table
+For since the war I've read reports i
+- magined events studied pro
+- cedures assisting incarceration
+W/ coroners who must know
+Something and whose language
+Rushes like unfettered streams on
+- ly half-knowing the work I mean
+Check out this wonder of a guy
+A spectacle withdrawn & covered
+With my latinate phrases issue
+Displace so gorgeous a figure again
+- st a ground of organs & viscera
+For which the world moves its
+Product making nothing this body
+
+Linking it to that body my body
+Severed from animal & plant over
+Which production cycles steadily
+Roll whose head the all-baffling
+Brain eviscerates evacuates exa
+- mines limbs jaundiced brown a
+Cunning tendon nerve now strip
+- ped so you still can't see things
+But just imagine his dreamy eyes
+Deadened plucked volition flakes
+Inside pleural cavities mere sacs
+Upon a table grey-white smooth
+Mucosa distended stomach not
+Flabby good-sized arms legs
+Ureters & genitalia unremarkable
+Interior what dura mater drapes
+And mysteries haunt the clear
+Yellow urine the pericardial bag
+
+From which his prick might other
+- wise rise normally with blood no
+Longer running red runs to brown
+Purple to tan as swelling jets pass
+- ions patient swollen one would
+Think not there since invisible
+Condemned inside his fat the start
+Of revolutions durable matter
+Is thin delicate yielding countless
+Embodiments baffling republics
+Whose cranial nerves contest
+My enjoyments will arrive
+From the offspring of his offspring
+Thru our bleakest time I come
+
+— from him myself.`,
+  },
+];
+
 const CloseIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -363,7 +427,7 @@ const Blog = () => {
     });
   };
 
-  const posts = blogPosts || [];
+  const posts = blogPosts?.length ? blogPosts : fallbackBlogPosts;
 
   return (
     <BlogContainer>
