@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSanityQuery, queries } from '../hooks/useSanity';
 
 const HomeContainer = styled.div`
   position: relative;
@@ -192,44 +193,57 @@ const TestNavigationSection = styled.div`
   }
 `;
 
+// Static fallbacks used when Sanity has no data yet
+const FALLBACKS = {
+  '/about': {
+    title: 'About',
+    subtitle:
+      'Designer turned developer exploring the intersection of film theory, media studies, and interaction design through computational art and creative coding.',
+  },
+  '/work': {
+    title: 'Work',
+    subtitle:
+      'Navigate through the branches to explore performance art, film practices, and collaborative projects spanning cinema, digital media, and live performance.',
+  },
+  '/contact': {
+    title: 'Contact',
+    subtitle:
+      'Connect through various platforms and channels. Available for collaboration, discussions about media art, and project inquiries.',
+  },
+  '/experiments': {
+    title: 'Experiments',
+    subtitle:
+      'Computational explorations in interactive design, particle systems, and generative art investigating the boundaries between code and creativity.',
+  },
+};
+
+const SLUG_MAP = {
+  '/about': 'about',
+  '/work': 'work',
+  '/contact': 'contact',
+  '/experiments': 'experiments',
+};
+
 const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // Determine what content to show based on current route
+
+  const slug = SLUG_MAP[location.pathname] || null;
+  const { data: pageData } = useSanityQuery(
+    slug ? queries.page : `null`,
+    slug ? { slug } : {}
+  );
+
   const getSectionContent = () => {
-    switch(location.pathname) {
-      case '/about':
-        return {
-          title: "About",
-          subtitle: "Designer turned developer exploring the intersection of film theory, media studies, and interaction design through computational art and creative coding.",
-          showContent: true
-        };
-      case '/work':
-        return {
-          title: "Work",
-          subtitle: "Navigate through the branches to explore performance art, film practices, and collaborative projects spanning cinema, digital media, and live performance.",
-          showContent: true
-        };
-      case '/contact':
-        return {
-          title: "Contact",
-          subtitle: "Connect through various platforms and channels. Available for collaboration, discussions about media art, and project inquiries.",
-          showContent: true
-        };
-      case '/experiments':
-        return {
-          title: "Experiments",
-          subtitle: "Computational explorations in interactive design, particle systems, and generative art investigating the boundaries between code and creativity.",
-          showContent: true
-        };
-      default:
-        return {
-          title: "Parsa Azari",
-          subtitle: "Creative Developer",
-          showContent: false // Main home doesn't show content box, just integrates with background
-        };
+    const fallback = FALLBACKS[location.pathname];
+    if (!fallback) {
+      return { title: 'Parsa Azari', subtitle: 'Creative Developer', showContent: false };
     }
+    return {
+      title: pageData?.title || fallback.title,
+      subtitle: pageData?.subtitle || fallback.subtitle,
+      showContent: true,
+    };
   };
 
   const content = getSectionContent();

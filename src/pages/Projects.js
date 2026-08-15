@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import ParallaxSection from '../components/ParallaxSection';
 import OptimizedImage from '../components/OptimizedImage';
 import { useScrollPosition } from '../hooks/useScrollPosition';
+import { useSanityQuery, queries } from '../hooks/useSanity';
+import { urlFor } from '../lib/sanity';
 
 const ProjectsContainer = styled.div`
   min-height: 100vh;
@@ -33,27 +35,9 @@ const ProjectInfo = styled.div`
 
 const Projects = () => {
   const { scrollPosition } = useScrollPosition();
+  const { data: projects, loading } = useSanityQuery(queries.projects);
 
-  const projects = [
-    {
-      id: 1,
-      title: "Project One",
-      description: "Description for project one",
-      image: "https://via.placeholder.com/400x300"
-    },
-    {
-      id: 2,
-      title: "Project Two",
-      description: "Description for project two",
-      image: "https://via.placeholder.com/400x300"
-    },
-    {
-      id: 3,
-      title: "Project Three",
-      description: "Description for project three",
-      image: "https://via.placeholder.com/400x300"
-    }
-  ];
+  const items = projects || [];
 
   return (
     <ProjectsContainer>
@@ -63,35 +47,41 @@ const Projects = () => {
             color: 'white',
             fontSize: '2.5rem',
             marginBottom: '2rem',
-            opacity: 1 - (scrollPosition * 0.001)
+            opacity: 1 - scrollPosition * 0.001,
           }}
         >
           My Projects
         </motion.h1>
       </ParallaxSection>
-      
-      <ProjectGrid>
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 }}
-          >
-            <OptimizedImage
-              src={project.image}
-              alt={project.title}
-              style={{ height: '200px' }}
-            />
-            <ProjectInfo>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-            </ProjectInfo>
-          </ProjectCard>
-        ))}
-      </ProjectGrid>
+
+      {!loading && (
+        <ProjectGrid>
+          {items.map((project, index) => (
+            <ProjectCard
+              key={project._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+            >
+              <OptimizedImage
+                src={
+                  project.image
+                    ? urlFor(project.image).width(400).height(200).url()
+                    : 'https://via.placeholder.com/400x300'
+                }
+                alt={project.title}
+                style={{ height: '200px' }}
+              />
+              <ProjectInfo>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+              </ProjectInfo>
+            </ProjectCard>
+          ))}
+        </ProjectGrid>
+      )}
     </ProjectsContainer>
   );
 };
 
-export default Projects; 
+export default Projects;

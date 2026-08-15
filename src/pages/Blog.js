@@ -3,6 +3,8 @@ import { AppContext } from '../App';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PortableText } from '@portabletext/react';
+import { useSanityQuery, queries } from '../hooks/useSanity';
 
 const BlogContainer = styled.div`
   position: fixed;
@@ -20,32 +22,35 @@ const BackButton = styled.button`
   position: fixed;
   top: 2rem;
   right: 2rem;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 0;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  transition: opacity 0.2s ease;
   z-index: 101;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
+    opacity: 0.55;
   }
 
   &:active {
-    transform: scale(0.95);
+    opacity: 0.35;
+  }
+
+  &:focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 5px;
   }
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
   }
 `;
 
@@ -86,7 +91,7 @@ const PostsList = styled.div`
   gap: 0;
 `;
 
-const BlogPost = styled(motion.article)`
+const BlogPostItem = styled(motion.article)`
   padding: 2rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
@@ -94,7 +99,7 @@ const BlogPost = styled(motion.article)`
 
   &:hover {
     padding-left: 1rem;
-    
+
     h2 {
       color: white;
     }
@@ -159,12 +164,19 @@ const ReadMore = styled.span`
   text-transform: uppercase;
   transition: color 0.3s ease;
 
-  ${BlogPost}:hover & {
+  ${BlogPostItem}:hover & {
     color: rgba(255, 255, 255, 0.6);
   }
 `;
 
-// Post Detail View Styles
+const LoadingText = styled.p`
+  font-family: 'Moderat';
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  padding: 4rem 0;
+`;
+
 const PostDetailOverlay = styled(motion.div)`
   position: fixed;
   top: 0;
@@ -176,37 +188,8 @@ const PostDetailOverlay = styled(motion.div)`
   overflow-y: auto;
 `;
 
-const PostDetailBackButton = styled.button`
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+const PostDetailBackButton = styled(BackButton)`
   z-index: 103;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
 `;
 
 const PostDetailContent = styled.div`
@@ -241,14 +224,19 @@ const PostBody = styled.div`
   font-weight: 300;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.9;
-  
+
   p {
     margin-bottom: 1.5rem;
   }
-  
+
   em {
     font-style: italic;
     color: rgba(255, 255, 255, 0.6);
+  }
+
+  strong {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
   }
 `;
 
@@ -278,16 +266,12 @@ const Poem = styled.pre`
   margin: 0;
 `;
 
-// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
 };
 
 const itemVariants = {
@@ -295,23 +279,14 @@ const itemVariants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94]
-    }
-  }
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
 };
 
 const overlayVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { duration: 0.4 }
-  },
-  exit: {
-    opacity: 0,
-    transition: { duration: 0.3 }
-  }
+  visible: { opacity: 1, transition: { duration: 0.4 } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 
 const contentVariants = {
@@ -319,82 +294,22 @@ const contentVariants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: {
-      duration: 0.5,
-      delay: 0.2,
-      ease: [0.25, 0.46, 0.45, 0.94]
-    }
-  }
+    transition: { duration: 0.5, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
 };
 
-// Blog posts data
-const blogPosts = [
-  {
-    id: 1,
-    title: 'debut',
-    date: '2026-02-16',
-    excerpt: "well I thought the website needs a blog section and even though I don't yet know what to do with it, but I think you might enjoy the poem below by rob halpern's book *Common Place:*",
-    category: 'Note',
-    content: `well I thought the website needs a blog section and even though I don't yet know what to do with it, but I think you might enjoy the poem below by rob halpern's book *Common Place:*`,
-    poem: `FALSE COMMUNIQUÉ
+const portableTextComponents = {
+  block: {
+    normal: ({ children }) => <p>{children}</p>,
+  },
+  marks: {
+    em: ({ children }) => <em>{children}</em>,
+    strong: ({ children }) => <strong>{children}</strong>,
+  },
+};
 
-And so I sing this body on a table
-For since the war I've read reports i
-- magined events studied pro
-- cedures assisting incarceration
-W/ coroners who must know
-Something and whose language
-Rushes like unfettered streams on
-- ly half-knowing the work I mean
-Check out this wonder of a guy
-A spectacle withdrawn & covered
-With my latinate phrases issue
-Displace so gorgeous a figure again
-- st a ground of organs & viscera
-For which the world moves its
-Product making nothing this body
-
-Linking it to that body my body
-Severed from animal & plant over
-Which production cycles steadily
-Roll whose head the all-baffling
-Brain eviscerates evacuates exa
-- mines limbs jaundiced brown a
-Cunning tendon nerve now strip
-- ped so you still can't see things
-But just imagine his dreamy eyes
-Deadened plucked volition flakes
-Inside pleural cavities mere sacs
-Upon a table grey-white smooth
-Mucosa distended stomach not
-Flabby good-sized arms legs
-Ureters & genitalia unremarkable
-Interior what dura mater drapes
-And mysteries haunt the clear
-Yellow urine the pericardial bag
-
-From which his prick might other
-- wise rise normally with blood no
-Longer running red runs to brown
-Purple to tan as swelling jets pass
-- ions patient swollen one would
-Think not there since invisible
-Condemned inside his fat the start
-Of revolutions durable matter
-Is thin delicate yielding countless
-Embodiments baffling republics
-Whose cranial nerves contest
-My enjoyments will arrive
-From the offspring of his offspring
-Thru our bleakest time I come
-
-— from him myself.`
-  }
-];
-
-// Close icon component
 const CloseIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
     <line x1="18" y1="6" x2="6" y2="18"></line>
     <line x1="6" y1="6" x2="18" y2="18"></line>
   </svg>
@@ -406,6 +321,8 @@ const Blog = () => {
   const navigate = useNavigate();
   const [selectedPost, setSelectedPost] = useState(null);
 
+  const { data: blogPosts, loading } = useSanityQuery(queries.blogPosts);
+
   const handleBack = useCallback(() => {
     if (selectedPost) {
       setSelectedPost(null);
@@ -414,29 +331,23 @@ const Blog = () => {
     }
   }, [navigate, selectedPost]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        handleBack();
-      }
+      if (event.key === 'Escape') handleBack();
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleBack]);
 
-  // T-Virus zoom effect
   useEffect(() => {
     const isBlogPage = location.pathname === '/blog';
-
     if (isBlogPage && tvirusRef?.current) {
       const zoomTimer = setTimeout(() => {
         if (tvirusRef.current) {
           try {
             tvirusRef.current.zoomToSection('blog');
           } catch (e) {
-            console.error("Blog.js: Error zooming to section:", e);
+            console.error('Blog.js: Error zooming to section:', e);
           }
         }
       }, 100);
@@ -448,20 +359,18 @@ const Blog = () => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
-  const openPost = (post) => {
-    setSelectedPost(post);
-  };
+  const posts = blogPosts || [];
 
   return (
     <BlogContainer>
       <BackButton onClick={handleBack} aria-label="Close">
         <CloseIcon />
       </BackButton>
-      
+
       <ContentWrapper>
         <BlogHeader>
           <BlogTitle
@@ -479,32 +388,32 @@ const Blog = () => {
             textual falsehood
           </BlogSubtitle>
         </BlogHeader>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <PostsList>
-            {blogPosts.map(post => (
-              <BlogPost 
-                key={post.id} 
-                variants={itemVariants}
-                onClick={() => openPost(post)}
-              >
-                <PostMeta>
-                  <PostDate>{formatDate(post.date)}</PostDate>
-                  <PostCategory>{post.category}</PostCategory>
-                </PostMeta>
-                <PostTitle>{post.title}</PostTitle>
-                <PostExcerpt>{post.excerpt}</PostExcerpt>
-                <ReadMore>Read more</ReadMore>
-              </BlogPost>
-            ))}
-          </PostsList>
-        </motion.div>
+
+        {loading ? (
+          <LoadingText>—</LoadingText>
+        ) : (
+          <motion.div variants={containerVariants} initial="hidden" animate="visible">
+            <PostsList>
+              {posts.map((post) => (
+                <BlogPostItem
+                  key={post._id}
+                  variants={itemVariants}
+                  onClick={() => setSelectedPost(post)}
+                >
+                  <PostMeta>
+                    <PostDate>{formatDate(post.date)}</PostDate>
+                    {post.category && <PostCategory>{post.category}</PostCategory>}
+                  </PostMeta>
+                  <PostTitle>{post.title}</PostTitle>
+                  {post.excerpt && <PostExcerpt>{post.excerpt}</PostExcerpt>}
+                  <ReadMore>Read more</ReadMore>
+                </BlogPostItem>
+              ))}
+            </PostsList>
+          </motion.div>
+        )}
       </ContentWrapper>
 
-      {/* Post Detail View */}
       <AnimatePresence>
         {selectedPost && (
           <PostDetailOverlay
@@ -520,18 +429,29 @@ const Blog = () => {
               <PostDetailHeader>
                 <PostDetailMeta>
                   <PostDate>{formatDate(selectedPost.date)}</PostDate>
-                  <PostCategory>{selectedPost.category}</PostCategory>
+                  {selectedPost.category && (
+                    <PostCategory>{selectedPost.category}</PostCategory>
+                  )}
                 </PostDetailMeta>
                 <PostDetailTitle>{selectedPost.title}</PostDetailTitle>
               </PostDetailHeader>
-              
+
               <PostBody>
-                <p>{selectedPost.content}</p>
+                {selectedPost.content ? (
+                  <PortableText
+                    value={selectedPost.content}
+                    components={portableTextComponents}
+                  />
+                ) : (
+                  selectedPost.excerpt && <p>{selectedPost.excerpt}</p>
+                )}
               </PostBody>
 
               {selectedPost.poem && (
                 <PoemContainer>
-                  <PoemTitle>from *Common Place* by Rob Halpern</PoemTitle>
+                  {selectedPost.poemAttribution && (
+                    <PoemTitle>{selectedPost.poemAttribution}</PoemTitle>
+                  )}
                   <Poem>{selectedPost.poem}</Poem>
                 </PoemContainer>
               )}

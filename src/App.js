@@ -27,6 +27,7 @@ const retryImport = (fn, retries = 3, delay = 1000) => {
 const Home = lazy(() => retryImport(() => import('./pages/Home')));
 const Blog = lazy(() => retryImport(() => import('./pages/Blog')));
 const About = lazy(() => retryImport(() => import('./pages/About')));
+const CV = lazy(() => retryImport(() => import('./pages/CV')));
 const Work = lazy(() => retryImport(() => import('./pages/Work')));
 const Contact = lazy(() => retryImport(() => import('./pages/Contact')));
 const Experiments = lazy(() => retryImport(() => import('./pages/Experiments')));
@@ -86,7 +87,7 @@ const AppContent = () => {
   const location = useLocation();
 
   // Determine if we should show the background or content
-  const isMainSection = ['/', '/work', '/about', '/contact', '/experiments'].includes(location.pathname);
+  const isMainSection = ['/', '/work', '/about', '/cv', '/contact', '/experiments'].includes(location.pathname);
   const isWorkSubpage = location.pathname.startsWith('/work/') && location.pathname !== '/work';
   const isExperimentSubpage = location.pathname.startsWith('/experiments/') && location.pathname !== '/experiments';
   const isBlogPage = location.pathname === '/blog';
@@ -99,7 +100,7 @@ const AppContent = () => {
     setActiveSection(sectionId);
     
     // Navigate to the appropriate route
-    if (sectionId === 'work' || sectionId === 'about' || sectionId === 'contact' || sectionId === 'experiments') {
+    if (sectionId === 'work' || sectionId === 'about' || sectionId === 'cv' || sectionId === 'contact' || sectionId === 'experiments') {
       navigate(`/${sectionId}`);
     } else if (sectionId === 'blog') {
       navigate('/blog');
@@ -127,6 +128,7 @@ const AppContent = () => {
               <Route path="/blog" element={<Blog />} />
               <Route path="/work" element={<Work />} />
               <Route path="/about" element={<About />} />
+              <Route path="/cv" element={<CV />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/experiments" element={<Experiments />} />
               <Route path="/work/solo-performances" element={<SoloPerformances />} />
@@ -157,4 +159,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;

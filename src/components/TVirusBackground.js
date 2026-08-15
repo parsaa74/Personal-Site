@@ -7,6 +7,7 @@ import { Mail, Github, Twitter, Linkedin, Globe, Dribbble, Sun, Moon, Cloud } fr
 import { SiVimeo, SiMastodon, SiBluesky, SiX } from '@icons-pack/react-simple-icons';
 import ArenaLogoIcon from '@aredotna/icons/ArenaLogoIcon';
 import { useDarkMode } from '../context/DarkModeContext'; // Add this import
+import CVPanel from './CVPanel';
 
 // Animation for text fade-in
 const fadeIn = keyframes`
@@ -825,6 +826,7 @@ const TVirusBackground = forwardRef((props, ref) => {
   const [showExperimentsContent, setShowExperimentsContent] = React.useState(false);
   const [showContactContent, setShowContactContent] = React.useState(false);
   const [showWorkContent, setShowWorkContent] = React.useState(false);
+  const [showCVContent, setShowCVContent] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState(location.pathname.substring(1)); // Track active section, initialized to route
   
   // Use global dark mode context instead of local state
@@ -858,6 +860,7 @@ const TVirusBackground = forwardRef((props, ref) => {
   
   // Ref to store active section info for external access
   const activeSectionRef = useRef(null);
+  const navStateRef = useRef({ navPoints: [] });
   // Initialize activeSectionRef to match the initial route
   useEffect(() => {
     activeSectionRef.current = location.pathname.substring(1);
@@ -979,11 +982,12 @@ const TVirusBackground = forwardRef((props, ref) => {
     setShowExperimentsContent(false);
     setShowWorkContent(false);
     setShowContactContent(false);
+    setShowCVContent(false);
   };
 
   // Custom click handler for the wrapper div
   const handleClick = (e) => {
-    if (!isInitializedRef.current || !activeSectionRef.current || !activeSectionRef.current.navPoints) {
+    if (!isInitializedRef.current || !navStateRef.current.navPoints) {
       console.warn("Click handler: component not fully initialized yet");
       return;
     }
@@ -997,7 +1001,7 @@ const TVirusBackground = forwardRef((props, ref) => {
     const relX = x - centerX;
     const relY = y - centerY;
     // Check if click is on any nav point
-    const navPoints = activeSectionRef.current.navPoints;
+    const navPoints = navStateRef.current.navPoints;
     let clickedNav = false;
     for (const point of navPoints) {
       const distance = Math.sqrt(
@@ -1054,27 +1058,38 @@ const TVirusBackground = forwardRef((props, ref) => {
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
     } else if (sectionId === 'experiments') {
       setShowAboutContent(false);
       setShowExperimentsContent(true);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
     } else if (sectionId === 'work') {
       setShowAboutContent(false);
       setShowExperimentsContent(false);
       setShowWorkContent(true);
       setShowContactContent(false);
+      setShowCVContent(false);
+    } else if (sectionId === 'cv') {
+      setShowAboutContent(false);
+      setShowExperimentsContent(false);
+      setShowWorkContent(false);
+      setShowContactContent(false);
+      setShowCVContent(true);
     } else if (sectionId === 'contact') {
       setShowAboutContent(false);
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(true);
+      setShowCVContent(false);
     } else if (sectionId === 'home') {
       // Home resets everything
       setShowAboutContent(false);
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
       setDebug(false);
     } else {
       // For any other section, hide all content
@@ -1082,6 +1097,7 @@ const TVirusBackground = forwardRef((props, ref) => {
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
     }
     
     // Call the onSectionClick prop if provided
@@ -1100,7 +1116,7 @@ const TVirusBackground = forwardRef((props, ref) => {
     },
     // Get all the current navigation points
     getNavPoints: () => {
-      return activeSectionRef.current?.navPoints || [];
+      return navStateRef.current.navPoints;
     }
   }), []);
 
@@ -1834,7 +1850,7 @@ const TVirusBackground = forwardRef((props, ref) => {
         updateAndDrawRipples();
         
         // Update ref with current state for external access
-        activeSectionRef.current = {
+        navStateRef.current = {
           navPoints,
           navSections: navSectionsWithAngles,
           debug,
@@ -2072,27 +2088,38 @@ const TVirusBackground = forwardRef((props, ref) => {
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
     } else if (currentPath === 'experiments') {
       setShowAboutContent(false);
       setShowExperimentsContent(true);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
     } else if (currentPath === 'work') {
       setShowAboutContent(false);
       setShowExperimentsContent(false);
       setShowWorkContent(true);
       setShowContactContent(false);
+      setShowCVContent(false);
+    } else if (currentPath === 'cv') {
+      setShowAboutContent(false);
+      setShowExperimentsContent(false);
+      setShowWorkContent(false);
+      setShowContactContent(false);
+      setShowCVContent(true);
     } else if (currentPath === 'contact') {
       setShowAboutContent(false);
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(true);
+      setShowCVContent(false);
     } else if (currentPath === 'home') {
       // Home resets everything
       setShowAboutContent(false);
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
       setDebug(false);
     } else {
       // For any other section, hide all content
@@ -2100,6 +2127,7 @@ const TVirusBackground = forwardRef((props, ref) => {
       setShowExperimentsContent(false);
       setShowWorkContent(false);
       setShowContactContent(false);
+      setShowCVContent(false);
     }
     
     // No automatic zooming - let visual feedback handle navigation
@@ -2378,6 +2406,10 @@ const TVirusBackground = forwardRef((props, ref) => {
           </WorkContainer>
         </FloatingAboutBox>
       )}
+
+      {showCVContent && isInitialized && (
+        <CVPanel isLight={isLightTheme} />
+      )}
       
 
     </div>
@@ -2387,4 +2419,4 @@ const TVirusBackground = forwardRef((props, ref) => {
 // Add displayName for React devtools and linting
 TVirusBackground.displayName = 'TVirusBackground';
 
-export default TVirusBackground; 
+export default TVirusBackground;

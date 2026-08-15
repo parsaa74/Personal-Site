@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, BookOpen, User, Briefcase, Mail, Beaker } from 'lucide-react';
+import { Menu, X, BookOpen, User, Briefcase, Mail, Beaker, FileText } from 'lucide-react';
 
 const MobileNavContainer = styled.div`
   display: none;
@@ -151,6 +151,7 @@ const MobileNavigation = () => {
     { path: '/about', label: 'About', icon: User },
     { path: '/work', label: 'Work', icon: Briefcase },
     { path: '/experiments', label: 'Experiments', icon: Beaker },
+    { path: '/cv', label: 'CV', icon: FileText },
     { path: '/contact', label: 'Contact', icon: Mail },
   ];
 
@@ -201,4 +202,4 @@ const MobileNavigation = () => {
   );
 };
 
-export default MobileNavigation; 
+export default MobileNavigation;

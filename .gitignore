@@ -40,3 +40,6 @@ Inter/
 
 # Backup files
 *.bak
+
+# Sanity Studio (managed separately)
+/CMS
