@@ -169,14 +169,6 @@ const ReadMore = styled.span`
   }
 `;
 
-const LoadingText = styled.p`
-  font-family: 'Moderat';
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.3);
-  text-align: center;
-  padding: 4rem 0;
-`;
-
 const PostDetailOverlay = styled(motion.div)`
   position: fixed;
   top: 0;
@@ -385,7 +377,7 @@ const Blog = () => {
   const navigate = useNavigate();
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const { data: blogPosts, loading } = useSanityQuery(queries.blogPosts);
+  const { data: blogPosts } = useSanityQuery(queries.blogPosts);
 
   const handleBack = useCallback(() => {
     if (selectedPost) {
@@ -453,29 +445,25 @@ const Blog = () => {
           </BlogSubtitle>
         </BlogHeader>
 
-        {loading ? (
-          <LoadingText>—</LoadingText>
-        ) : (
-          <motion.div variants={containerVariants} initial="hidden" animate="visible">
-            <PostsList>
-              {posts.map((post) => (
-                <BlogPostItem
-                  key={post._id}
-                  variants={itemVariants}
-                  onClick={() => setSelectedPost(post)}
-                >
-                  <PostMeta>
-                    <PostDate>{formatDate(post.date)}</PostDate>
-                    {post.category && <PostCategory>{post.category}</PostCategory>}
-                  </PostMeta>
-                  <PostTitle>{post.title}</PostTitle>
-                  {post.excerpt && <PostExcerpt>{post.excerpt}</PostExcerpt>}
-                  <ReadMore>Read more</ReadMore>
-                </BlogPostItem>
-              ))}
-            </PostsList>
-          </motion.div>
-        )}
+        <motion.div variants={containerVariants} initial="hidden" animate="visible">
+          <PostsList>
+            {posts.map((post) => (
+              <BlogPostItem
+                key={post._id}
+                variants={itemVariants}
+                onClick={() => setSelectedPost(post)}
+              >
+                <PostMeta>
+                  <PostDate>{formatDate(post.date)}</PostDate>
+                  {post.category && <PostCategory>{post.category}</PostCategory>}
+                </PostMeta>
+                <PostTitle>{post.title}</PostTitle>
+                {post.excerpt && <PostExcerpt>{post.excerpt}</PostExcerpt>}
+                <ReadMore>Read more</ReadMore>
+              </BlogPostItem>
+            ))}
+          </PostsList>
+        </motion.div>
       </ContentWrapper>
 
       <AnimatePresence>
