@@ -199,6 +199,12 @@ const CVPanel = ({ isLight }) => (
               </a>
             </strong>
             <p>Graphic Designer and Front-End Engineer</p>
+            <p>
+              Portfolio project:{' '}
+              <a href="https://mreclipse.ir/" target="_blank" rel="noopener noreferrer">
+                Mr. Eclipse
+              </a>
+            </p>
           </div>
         </ExperienceRow>
         <ExperienceRow $isLight={isLight}>
