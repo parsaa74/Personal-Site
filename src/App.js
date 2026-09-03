@@ -4,7 +4,6 @@ import { DarkModeProvider } from './context/DarkModeContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingState from './components/LoadingState';
 // import SmokeSlideshow from './components/SmokeSlideshow'; // Comment out SmokeSlideshow
-import TVirusBackground from './components/TVirusBackground'; // Import new background
 import MobileNavigation from './components/MobileNavigation'; // Import mobile navigation
 // import BrutalistNavigation from './components/BrutalistNavigation';
 import styled from 'styled-components';
@@ -24,6 +23,7 @@ const retryImport = (fn, retries = 3, delay = 1000) => {
 };
 
 // Lazy load components for better performance with retry functionality
+const TVirusBackground = lazy(() => retryImport(() => import('./components/TVirusBackground')));
 const Home = lazy(() => retryImport(() => import('./pages/Home')));
 const Blog = lazy(() => retryImport(() => import('./pages/Blog')));
 const About = lazy(() => retryImport(() => import('./pages/About')));
@@ -117,7 +117,11 @@ const AppContent = () => {
         
         {/* TVirusBackground - shown for main sections */}
         <BackgroundWrapper showBackground={showBackground}>
-          <TVirusBackground ref={tvirusRef} onSectionClick={handleNavigation} />
+          {showBackground && (
+            <Suspense fallback={null}>
+              <TVirusBackground ref={tvirusRef} onSectionClick={handleNavigation} />
+            </Suspense>
+          )}
         </BackgroundWrapper>
         
         {/* Content - shown for work subpages */}

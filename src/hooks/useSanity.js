@@ -3,11 +3,21 @@ import { sanityClient } from '../lib/sanity';
 
 export function useSanityQuery(query, params = {}) {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(Boolean(query));
   const [error, setError] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
+
+    if (!query) {
+      setData(null);
+      setError(null);
+      setLoading(false);
+      return undefined;
+    }
+
+    setLoading(true);
+    setError(null);
 
     sanityClient
       .fetch(query, params)

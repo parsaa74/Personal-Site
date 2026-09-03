@@ -1122,6 +1122,15 @@ const TVirusBackground = forwardRef((props, ref) => {
 
   // --- p5 setup effect: only run on mount ---
   useEffect(() => {
+    let disposed = false;
+    let initializationTimer = null;
+    const canvasContainer = canvasRef.current;
+
+    // Remove any renderer left by a previous StrictMode setup pass.
+    if (canvasContainer) {
+      canvasContainer.replaceChildren();
+    }
+
     // When this effect runs (or re-runs), the sketch instance is considered alive.
     isSketchInstanceAliveRef.current = true;
     // --- Customizable Parameters with Defaults ---
@@ -1265,9 +1274,9 @@ const TVirusBackground = forwardRef((props, ref) => {
         let wind = this.p.noise((this.p.frameCount + this.index) * windSpeedFactor) * windMult;
         this.applyForce(wind);
 
-        let angleThresh = 10;
-        let spring = this.p.createVector(this.restAngle, 0);
-        let distance = this.p.dist(this.angle, 0, this.restAngle, 0);
+        const angleThresh = 10;
+        const displacement = this.restAngle - this.angle;
+        const distance = Math.abs(displacement);
         let effectiveSpringForce = this.p.map(this.p.min(distance, angleThresh), 0, angleThresh, 0, springStrength);
         
         // Increase spring force for navigation branches to keep them more stable
@@ -1275,10 +1284,8 @@ const TVirusBackground = forwardRef((props, ref) => {
           effectiveSpringForce *= 1.5;
         }
 
-        spring.sub(this.p.createVector(this.angle, 0));
-        spring.normalize();
-        spring.mult(effectiveSpringForce);
-        this.applyForce(spring.x);
+        // Apply the scalar spring force directly instead of allocating two vectors per branch.
+        this.applyForce(displacement === 0 ? 0 : Math.sign(displacement) * effectiveSpringForce);
 
         this.vel *= dragFactor;
         this.vel += this.acc;
@@ -1356,11 +1363,9 @@ const TVirusBackground = forwardRef((props, ref) => {
 
     function treeIterator(branch, worldX, worldY, worldA, p) {
       worldA += branch.angle;
-      let vec = p.createVector(branch.length, 0);
-      vec.rotate(p.radians(worldA));
-
-      worldX += vec.x;
-      worldY += vec.y;
+      const worldRadians = p.radians(worldA);
+      worldX += branch.length * Math.cos(worldRadians);
+      worldY += branch.length * Math.sin(worldRadians);
 
       p.push();
       
@@ -1703,8 +1708,7 @@ const TVirusBackground = forwardRef((props, ref) => {
         targetZoomLevel = 1.4; // Reduced from 3.5 to 1.4 for subtle zoom
         isZooming = true;
         
-        // Add a visual indicator when zooming
-        p.createCanvas(window.innerWidth, window.innerHeight).parent(canvasRef.current);
+        // The existing canvas will render the zoom state on the next frame.
       };
       
       p.resetZoom = () => {
@@ -1713,8 +1717,7 @@ const TVirusBackground = forwardRef((props, ref) => {
         targetZoomLevel = 1;
         isZooming = true;
         
-        // Re-create canvas to make sure all updates apply
-        p.createCanvas(window.innerWidth, window.innerHeight).parent(canvasRef.current);
+        // The existing canvas will render the reset state on the next frame.
       };
 
       // Wrapper for zoomToSection
@@ -1780,6 +1783,17 @@ const TVirusBackground = forwardRef((props, ref) => {
       };
 
       p.setup = () => {
+        if (disposed) {
+          // p5 creates a default 100×100 canvas before setup; remove it if this
+          // StrictMode effect pass was already cleaned up.
+          p.noCanvas();
+          p.noLoop();
+          return;
+        }
+
+        // Cap this expensive full-screen animation without changing its appearance.
+        p.frameRate(30);
+
         // Create canvas and store the canvas element reference
         const canvas = p.createCanvas(window.innerWidth, window.innerHeight);
         
@@ -1803,13 +1817,20 @@ const TVirusBackground = forwardRef((props, ref) => {
         initRain();
         
         // Signal that initialization is complete after a delay to ensure everything is ready
-        setTimeout(() => {
-          setIsInitialized(true);
-          console.log("TVirusBackground is fully initialized");
+        initializationTimer = setTimeout(() => {
+          if (!disposed) {
+            setIsInitialized(true);
+            console.log("TVirusBackground is fully initialized");
+          }
         }, 500);
       };
 
       p.draw = () => {
+        if (disposed) {
+          p.noLoop();
+          return;
+        }
+
         // Check if theme has changed
         if (lastThemeState !== isLightThemeRef.current) {
           p.updateThemeColors();
@@ -2044,7 +2065,19 @@ const TVirusBackground = forwardRef((props, ref) => {
       };
     };
 
-    p5Instance.current = new p5(sketch);
+    const instance = new p5(sketch);
+    p5Instance.current = instance;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        instance.noLoop();
+      } else if (!disposed) {
+        instance.loop();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    handleVisibilityChange();
 
     // Expose methods from p5Instance to the ref for external access
     if (p5Instance.current) {
@@ -2062,15 +2095,27 @@ const TVirusBackground = forwardRef((props, ref) => {
     }
 
     return () => {
-      // Before removing the p5 instance, mark it as not alive.
+      disposed = true;
       isSketchInstanceAliveRef.current = false;
-      if (p5Instance.current) {
-        try {
-          p5Instance.current.remove();
-        } catch (e) {
-          console.error("Error during p5Instance.current.remove():", e);
-        }
-        p5Instance.current = null; // Explicitly nullify our ref
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (initializationTimer) {
+        clearTimeout(initializationTimer);
+      }
+
+      try {
+        instance.remove();
+      } catch (e) {
+        console.error("Error during p5 instance removal:", e);
+      }
+
+      // p5 2 can leave its renderer behind when StrictMode cleans up immediately.
+      if (canvasContainer) {
+        canvasContainer.replaceChildren();
+      }
+
+      // Only clear the shared ref if it still points at this effect's instance.
+      if (p5Instance.current === instance) {
+        p5Instance.current = null;
       }
     };
   }, []); // Only run once on mount

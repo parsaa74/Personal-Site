@@ -230,7 +230,7 @@ const Home = () => {
 
   const slug = SLUG_MAP[location.pathname] || null;
   const { data: pageData } = useSanityQuery(
-    slug ? queries.page : `null`,
+    slug ? queries.page : null,
     slug ? { slug } : {}
   );
 
