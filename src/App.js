@@ -3,9 +3,7 @@ import { HashRouter as Router, Routes, Route, useNavigate, useLocation } from 'r
 import { DarkModeProvider } from './context/DarkModeContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingState from './components/LoadingState';
-// import SmokeSlideshow from './components/SmokeSlideshow'; // Comment out SmokeSlideshow
 import MobileNavigation from './components/MobileNavigation'; // Import mobile navigation
-// import BrutalistNavigation from './components/BrutalistNavigation';
 import styled from 'styled-components';
 
 // Helper function to handle dynamic import errors
@@ -145,7 +143,6 @@ const AppContent = () => {
             </Routes>
           </Suspense>
         </ContentWrapper>
-        {/* Removed BrutalistNavigation */}
       </AppContainer>
     </AppContext.Provider>
   );
